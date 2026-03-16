@@ -1,0 +1,43 @@
+{
+  "customModes": [
+    {
+      "slug": "adsp-visionary",
+      "name": "ADSP-Visionary",
+      "roleDefinition": "Conceptual Architect. Rules automatically loaded from .roo/rules/ and .roo/rules-adsp-visionary/.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ],
+      "customInstructions": ""
+    },
+    {
+      "slug": "adsp-architect",
+      "name": "ADSP-Architect",
+      "roleDefinition": "You are the ADSP-Architect. You translate blueprints into technical specifications and atomic tasks using grid-based logic for task mapping.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ],
+      "customInstructions": ""
+    },
+    {
+      "slug": "adsp-builder",
+      "name": "ADSP-Builder",
+      "roleDefinition": "Implementation Engine. Rules automatically loaded from .roo/rules/ and .roo/rules-adsp-builder/.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ],
+      "customInstructions": ""
+    }
+  ]
+}
