@@ -152,11 +152,36 @@
 | T-001 | Project Scaffold & Docker Compose | ✅ Done | `.adsp/tasks/T-001/report.md` |
 | T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done | `.adsp/tasks/T-002/report.md` |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done | `.adsp/tasks/T-003/report.md` |
-| T-004 | Schema Management API + Dynamic DDL | 🟡 Pending | `.adsp/tasks/T-004/task.md` |
+| T-004 | Schema Management API + Dynamic DDL | ✅ Done | `.adsp/tasks/T-004/report.md` |
 | T-005 | Data CRUD API + Audit Trail | ⬜ Queued | — |
 | T-006 | Export Engine (xlsx generation) | ⬜ Queued | — |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued | — |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued | — |
 
 </task_grid>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-16T22:14:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-004 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-004/task.md`.
+- Implemented T-004: Schema Management API + Dynamic DDL.
+  - Created `src/backend/app/services/dynamic_ddl.py` — `DATA_TYPE_MAP` + `ensure_table_exists()` using `CREATE TABLE IF NOT EXISTS`; system columns (`_row_id`, `is_deleted`, `_upload_id`) always prepended; user columns sorted by `column_order`.
+  - Updated `src/backend/app/schemas/schema_definition.py` — added `ColumnDisplayNameUpdate` Pydantic model.
+  - Replaced stub `src/backend/app/routers/schema.py` — full implementation of all 4 routes: `list_schemas`, `create_schema`, `get_schema`, `update_column`. Includes naming validation (`^[a-z][a-z0-9_]*$`), reserved name guard, duplicate detection, `409` on existing schema, `400` on immutable field mutation.
+  - Updated `src/backend/app/services/ingestion.py` — removed inline `_ensure_table_exists()` stub; wired to `dynamic_ddl.ensure_table_exists()`; removed unused imports.
+- Created `.adsp/tasks/T-004/report.md` with full implementation report and manual validation checklist.
+- Updated `README.md` — added `dynamic_ddl.py` to project structure; marked T-004 as Done.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-004 complete. Ready for T-005.
+
+*Last Builder Agent Run: 2026-03-16T22:14:00Z*
+
+</builder_annotation>
 

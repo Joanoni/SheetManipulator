@@ -24,3 +24,7 @@ class ColumnDefinitionRead(ColumnDefinitionCreate):
     table_system_name: str
 
     model_config = {"from_attributes": True}
+
+
+class ColumnDisplayNameUpdate(BaseModel):
+    display_name: str

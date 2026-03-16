@@ -7,16 +7,10 @@ Flow:
   3. Run validation engine (short-circuits at 1,000 errors).
   4a. On errors  → generate error report → update upload_registry status="error".
   4b. On success → ensure dynamic table exists → bulk-insert rows → status="ingested".
-
-Note: dynamic_ddl.ensure_table_exists() is implemented in T-004.
-      A lightweight stub is called here so the pipeline is wired end-to-end.
 """
 from __future__ import annotations
 
-import json
-import os
 import uuid
-from datetime import datetime, timezone
 
 import openpyxl
 from sqlalchemy import select, text
@@ -24,6 +18,7 @@ from sqlalchemy import select, text
 from app.database import AsyncSessionLocal
 from app.models.schema_definition import SchemaDefinition
 from app.models.upload_registry import UploadRegistry
+from app.services import dynamic_ddl
 from app.services.export import generate_error_report
 from app.services.validation import validate_worksheet
 
@@ -79,8 +74,8 @@ async def run_ingestion_pipeline(
                 return
 
             # ── 4b. Validation passed — bulk insert ───────────────────────────
-            # Ensure the dynamic table exists (stub until T-004 is implemented).
-            await _ensure_table_exists(session, table_system_name, schema)
+            # Ensure the dynamic table exists via the T-004 DDL service.
+            await dynamic_ddl.ensure_table_exists(table_system_name, schema, session)
 
             # Re-open workbook for data extraction (read_only iterates once)
             wb2 = openpyxl.load_workbook(workbook_path, read_only=True, data_only=True)
@@ -160,34 +155,3 @@ async def _set_status(
         await session.commit()
 
 
-async def _ensure_table_exists(session, table_system_name: str, schema: list) -> None:
-    """
-    Lightweight DDL stub — creates the dynamic table if it does not exist.
-    Full implementation lives in T-004 (services/dynamic_ddl.py).
-    This stub is intentionally minimal so T-003 is self-contained.
-    """
-    # Map schema data_type → SQLite column type
-    _type_map = {
-        "String": "TEXT",
-        "Integer": "INTEGER",
-        "Float": "REAL",
-        "Boolean": "INTEGER",  # SQLite stores booleans as 0/1
-        "Date": "TEXT",
-    }
-
-    col_defs = [
-        '"_row_id" TEXT PRIMARY KEY',
-        '"is_deleted" INTEGER NOT NULL DEFAULT 0',
-        '"_upload_id" TEXT',
-    ]
-    for col in schema:
-        sql_type = _type_map.get(col.data_type, "TEXT")
-        nullable = "" if col.is_mandatory else ""
-        col_defs.append(f'"{col.column_system_name}" {sql_type}')
-
-    ddl = (
-        f'CREATE TABLE IF NOT EXISTS "{table_system_name}" '
-        f"({', '.join(col_defs)})"
-    )
-    await session.execute(text(ddl))
-    await session.commit()
