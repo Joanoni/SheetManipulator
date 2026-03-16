@@ -185,3 +185,47 @@
 
 </builder_annotation>
 
+---
+
+## Architect Annotations
+<architect_annotation>
+
+### Run: 2026-03-16T22:46:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed Visionary last run (2026-03-16T21:32:03Z) is before previous Architect run (2026-03-16T21:37:00Z); no blueprint changes detected.
+- Read `.adsp/specs/spec.md` — confirmed spec is current and covers T-005 through T-008.
+- Read existing `src/` files for architectural alignment:
+  - `src/backend/app/routers/data.py` — 4 HTTP 501 stubs confirmed.
+  - `src/backend/app/routers/export.py` — 1 HTTP 501 stub confirmed.
+  - `src/backend/app/models/audit_log.py` — `AuditLog` ORM model confirmed.
+  - `src/backend/app/models/schema_definition.py` — `SchemaDefinition` ORM model confirmed.
+  - `src/backend/app/services/dynamic_ddl.py` — `ensure_table_exists()` + `DATA_TYPE_MAP` confirmed.
+  - `src/backend/app/services/ingestion.py` — full pipeline confirmed; uses `dynamic_ddl`.
+  - `src/backend/app/schemas/schema_definition.py` — `ColumnDefinitionRead`, `SchemaCreate`, `ColumnDisplayNameUpdate` confirmed.
+  - `src/backend/app/schemas/audit.py` — `AuditLogRead` Pydantic model confirmed.
+  - `src/backend/app/main.py` — all 4 routers registered under `/api` prefix.
+  - `src/frontend/package.json` — React 19, TanStack Query v5, Axios, Tailwind v4, Vite 8 confirmed.
+  - `src/frontend/src/App.tsx` — placeholder confirmed; ready for replacement in T-007.
+- Created `.adsp/tasks/T-005/task.md` — Data CRUD API + Audit Trail (Backend, Medium complexity).
+- Created `.adsp/tasks/T-006/task.md` — Export Engine xlsx generation (Backend, Low complexity).
+- Created `.adsp/tasks/T-007/task.md` — Frontend: Upload Wizard + Schema Mapping UI (Frontend, High complexity).
+- Created `.adsp/tasks/T-008/task.md` — Frontend: Dynamic DataTable CRUD + Audit Drawer (Frontend, High complexity).
+
+**Next 4 Tasks Queued for Builder:**
+| Task | Title | Complexity |
+| :--- | :--- | :--- |
+| T-005 | Data CRUD API + Audit Trail | Medium |
+| T-006 | Export Engine (xlsx generation) | Low |
+| T-007 | Frontend: Upload Wizard + Schema Mapping UI | High |
+| T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | High |
+
+**Architectural Notes:**
+> T-005 introduces `src/backend/app/schemas/data_row.py` (new file) and a `GET /api/tables/{table_name}/audit` endpoint not in the original spec — added to expose audit trail to the frontend without a separate router. T-006 adds `export_table_to_xlsx()` to the existing `services/export.py` and requires verifying `get_db()` exists in `database.py`. T-007 requires installing `react-router-dom` as a new frontend dependency. T-008 extends `src/frontend/src/api/schema.ts` (created in T-007) with `listSchemas` and `getSchema` functions.
+
+**Status:** ✅ Tasks T-005–T-008 created. Ready for ADSP-Builder.
+
+*Last Architect Agent Run: 2026-03-16T22:46:00Z*
+
+</architect_annotation>
+
