@@ -54,9 +54,7 @@ You are the ADSP-Builder. You are the implementation engine. You execute tasks d
 * Read task folder in `.adsp/tasks/`.
 * Implement the task in `src/`.
 * Update `.gitignore` if needed, any new entry in `.gitignore` also must be added to `.rooignore`.
-* Respond with the guide and ask if the task is approved, using 2 options.
-    * Yes, approved — proceed with Workflow 2 (update README, create report, commit & push)
-    * No, rejected — rollback and create failure report
+* Respond with the guide (Do not ask if the task is approved, wait for the next prompt).
 
 ### Workflow 2
 * Check if the user approved the task.

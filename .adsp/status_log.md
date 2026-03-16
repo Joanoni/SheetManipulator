@@ -86,13 +86,40 @@
 
 ---
 
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-16T22:01:49Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-002 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-002/task.md`.
+- Implemented T-002: Backend Core: DB Models + FastAPI App Factory.
+  - Updated `src/backend/app/database.py` — added `init_db()` with `Base.metadata.create_all`.
+  - Created `src/backend/app/models/` package: `upload_registry.py`, `schema_definition.py`, `audit_log.py`, `__init__.py`.
+  - Created `src/backend/app/schemas/` package: `upload.py`, `schema_definition.py`, `audit.py`, `__init__.py`.
+  - Created `src/backend/app/routers/` package: `upload.py`, `schema.py`, `data.py`, `export.py` (all stubs returning HTTP 501), `__init__.py`.
+  - Updated `src/backend/app/main.py` — lifespan context manager calling `init_db()` + 4 router registrations under `/api` prefix.
+- User approved implementation.
+- Updated `README.md` — expanded project structure, marked T-002 as Done.
+- Created `.adsp/tasks/T-002/report.md` with full implementation report.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-002 complete. Ready for T-003.
+
+*Last Builder Agent Run: 2026-03-16T22:01:49Z*
+
+</builder_annotation>
+
+---
+
 ## Implementation Tasks
 <task_grid>
 
 | ID | Task Description | Status | Evidence |
 | :--- | :--- | :--- | :--- |
 | T-001 | Project Scaffold & Docker Compose | ✅ Done | `.adsp/tasks/T-001/report.md` |
-| T-002 | Backend Core: DB Models + FastAPI App Factory | 🟡 Pending | `.adsp/tasks/T-002/task.md` |
+| T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done | `.adsp/tasks/T-002/report.md` |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | 🟡 Pending | `.adsp/tasks/T-003/task.md` |
 | T-004 | Schema Management API + Dynamic DDL | 🟡 Pending | `.adsp/tasks/T-004/task.md` |
 | T-005 | Data CRUD API + Audit Trail | ⬜ Queued | — |

@@ -48,14 +48,27 @@ docker compose up --build
 src/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI app factory + /health
-│   │   └── database.py      # SQLAlchemy async engine stub
+│   │   ├── main.py              # FastAPI app factory, lifespan, router registration
+│   │   ├── database.py          # SQLAlchemy async engine + init_db()
+│   │   ├── models/
+│   │   │   ├── upload_registry.py   # ORM: upload_registry table
+│   │   │   ├── schema_definition.py # ORM: schema_definitions table
+│   │   │   └── audit_log.py         # ORM: audit_log table
+│   │   ├── routers/
+│   │   │   ├── upload.py        # Stub: POST /upload, GET /uploads/...
+│   │   │   ├── schema.py        # Stub: CRUD /schemas
+│   │   │   ├── data.py          # Stub: CRUD /tables/{name}/rows
+│   │   │   └── export.py        # Stub: GET /tables/{name}/export
+│   │   └── schemas/
+│   │       ├── upload.py        # Pydantic: UploadRegistryRead
+│   │       ├── schema_definition.py # Pydantic: SchemaCreate, ColumnDefinitionRead
+│   │       └── audit.py         # Pydantic: AuditLogRead
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
 │   │   ├── main.tsx
-│   │   └── App.tsx          # Placeholder
+│   │   └── App.tsx              # Placeholder
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   └── package.json
@@ -69,7 +82,7 @@ src/
 | Task | Title | Status |
 | :--- | :--- | :--- |
 | T-001 | Project Scaffold & Docker Compose | ✅ Done |
-| T-002 | Backend Core: DB Models + FastAPI App Factory | 🟡 Pending |
+| T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | 🟡 Pending |
 | T-004 | Schema Management API + Dynamic DDL | 🟡 Pending |
 | T-005 | Data CRUD API + Audit Trail | ⬜ Queued |
