@@ -1,0 +1,13 @@
+# AEGIS Bundle Ignore
+# Files and folders to exclude from the XML bundle
+
+.git/
+.gitignore
+agent_framework/first_prompt_chat_setup.md
+agent_framework/first_prompt_chat_cycle.md
+agent_framework/agent/system_prompt.md
+.rooignore
+.bundleignore
+agent_framework/bundle_generator.py
+agent_framework/framework.md
+tasks.ps1

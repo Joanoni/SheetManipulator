@@ -1,0 +1,10 @@
+﻿{
+  "task_id": "12",
+  "phase": "04_phase",
+  "title": "Concurrency Stress Test",
+  "status": "pending",
+  "started_at": null,
+  "completed_at": null,
+  "assigned_to": "AI Agent",
+  "priority": "critical"
+}

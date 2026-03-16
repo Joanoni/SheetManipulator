@@ -1,0 +1,10 @@
+﻿{
+  "task_id": "08",
+  "phase": "03_phase",
+  "title": "Frontend Scaffold",
+  "status": "pending",
+  "started_at": null,
+  "completed_at": null,
+  "assigned_to": "AI Agent",
+  "priority": "medium"
+}

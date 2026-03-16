@@ -1,0 +1,5 @@
+{
+  "project_name": "SheetManipulator",
+  "framework_version": "1.0.0",
+  "bundle_output": "agent_framework/bundles/"
+}

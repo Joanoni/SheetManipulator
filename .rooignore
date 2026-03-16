@@ -1,0 +1,12 @@
+.git/
+agent_framework/agent/
+agent_framework/bundle_genrator.py
+agent_framework/bundles/
+agent_framework/config.json
+agent_framework/first_prompt_chat_cycle.md
+agent_framework/first_prompt_chat_setup.md
+agent_framework/framework.md
+agent_framework/memory/
+agent_framework/tmp/
+agent_framework/tmp/
+.bundleignore

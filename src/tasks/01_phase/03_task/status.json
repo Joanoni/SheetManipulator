@@ -1,0 +1,10 @@
+﻿{
+  "task_id": "03",
+  "phase": "01_phase",
+  "title": "Startup Integrity Check",
+  "status": "pending",
+  "started_at": null,
+  "completed_at": null,
+  "assigned_to": "AI Agent",
+  "priority": "high"
+}
