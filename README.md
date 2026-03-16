@@ -55,12 +55,16 @@ src/
 │   │   │   ├── schema_definition.py # ORM: schema_definitions table
 │   │   │   └── audit_log.py         # ORM: audit_log table
 │   │   ├── routers/
-│   │   │   ├── upload.py        # Stub: POST /upload, GET /uploads/...
+│   │   │   ├── upload.py        # POST /upload, GET /uploads/... (T-003)
 │   │   │   ├── schema.py        # Stub: CRUD /schemas
 │   │   │   ├── data.py          # Stub: CRUD /tables/{name}/rows
 │   │   │   └── export.py        # Stub: GET /tables/{name}/export
+│   │   ├── services/
+│   │   │   ├── ingestion.py     # Background ingestion pipeline (T-003)
+│   │   │   ├── validation.py    # Validation engine, short-circuit @ 1,000 (T-003)
+│   │   │   └── export.py        # Error report generator (T-003)
 │   │   └── schemas/
-│   │       ├── upload.py        # Pydantic: UploadRegistryRead
+│   │       ├── upload.py        # Pydantic: UploadRegistryRead, ProcessRequest
 │   │       ├── schema_definition.py # Pydantic: SchemaCreate, ColumnDefinitionRead
 │   │       └── audit.py         # Pydantic: AuditLogRead
 │   ├── Dockerfile
@@ -83,7 +87,7 @@ src/
 | :--- | :--- | :--- |
 | T-001 | Project Scaffold & Docker Compose | ✅ Done |
 | T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done |
-| T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | 🟡 Pending |
+| T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done |
 | T-004 | Schema Management API + Dynamic DDL | 🟡 Pending |
 | T-005 | Data CRUD API + Audit Trail | ⬜ Queued |
 | T-006 | Export Engine (xlsx generation) | ⬜ Queued |

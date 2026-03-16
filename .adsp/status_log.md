@@ -113,6 +113,37 @@
 
 ---
 
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-16T22:06:09Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-003 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-003/task.md`.
+- Implemented T-003: Ingestion Pipeline: Upload, Cold Storage & Validation Engine.
+  - Created `src/backend/app/services/__init__.py` — package marker.
+  - Created `src/backend/app/services/validation.py` — `ValidationError` dataclass + `validate_worksheet()` with short-circuit at 1,000 errors; type rules for `Integer`, `Float`, `Boolean`, `Date`, `String`.
+  - Created `src/backend/app/services/export.py` — `generate_error_report()` writes 4-column error `.xlsx` to cold storage.
+  - Created `src/backend/app/services/ingestion.py` — `run_ingestion_pipeline()` background coroutine; loads workbook, validates, branches on error/success, bulk-inserts via parameterized `text()`, includes inline DDL stub.
+  - Replaced stub `src/backend/app/routers/upload.py` — 4 full routes: `upload_file()`, `get_worksheets()`, `process_upload()`, `get_status()`.
+  - Extended `src/backend/app/schemas/upload.py` — added `ProcessRequest` Pydantic model.
+  - Updated `README.md` — added `services/` layer to project structure; marked T-003 as Done.
+- User approved implementation.
+- Created `.adsp/tasks/T-003/report.md` with full implementation report.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Deviation Note:**
+> `_ensure_table_exists()` implemented as an inline DDL stub in `ingestion.py` so T-003 is self-contained. Full `dynamic_ddl.py` service will be implemented in T-004.
+
+**Status:** ✅ T-003 complete. Ready for T-004.
+
+*Last Builder Agent Run: 2026-03-16T22:06:09Z*
+
+</builder_annotation>
+
+---
+
 ## Implementation Tasks
 <task_grid>
 
@@ -120,7 +151,7 @@
 | :--- | :--- | :--- | :--- |
 | T-001 | Project Scaffold & Docker Compose | ✅ Done | `.adsp/tasks/T-001/report.md` |
 | T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done | `.adsp/tasks/T-002/report.md` |
-| T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | 🟡 Pending | `.adsp/tasks/T-003/task.md` |
+| T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done | `.adsp/tasks/T-003/report.md` |
 | T-004 | Schema Management API + Dynamic DDL | 🟡 Pending | `.adsp/tasks/T-004/task.md` |
 | T-005 | Data CRUD API + Audit Trail | ⬜ Queued | — |
 | T-006 | Export Engine (xlsx generation) | ⬜ Queued | — |
