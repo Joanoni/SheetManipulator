@@ -32,3 +32,5 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 026| 2026-03-16 | Frontend: Vite + React + TypeScript scaffold | Created manual Vite scaffold instead of `npm create vite@latest` to maintain full control and avoid interactive prompts in automated execution. | Approved |
 | 027| 2026-03-16 | Frontend: vite-env.d.ts required | `/// <reference types="vite/client" />` must be in `src/vite-env.d.ts` for `import.meta.env` to type-check under tsc. | Approved |
 | 028| 2026-03-16 | Frontend: npx.cmd on Windows | Python subprocess.run requires `npx.cmd` (not `npx`) on Windows to execute npm scripts. | Approved |
+| 029| 2026-03-16 | DataGrid: createColumnHelper for type-safe columns | Using @tanstack/react-table v8's createColumnHelper provides type-safe column definitions over raw ColumnDef arrays. | Approved |
+| 030| 2026-03-16 | DataGrid: manualPagination=true | Server-side pagination is enforced via manualPagination:true; the API handles all data slicing, preventing client-side re-pagination of partial datasets. | Approved |
