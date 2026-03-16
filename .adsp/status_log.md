@@ -153,7 +153,7 @@
 | T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done | `.adsp/tasks/T-002/report.md` |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done | `.adsp/tasks/T-003/report.md` |
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done | `.adsp/tasks/T-004/report.md` |
-| T-005 | Data CRUD API + Audit Trail | ✅ Done | `.adsp/tasks/T-005/report.md` |
+| T-005 | Data CRUD API + Audit Trail | ⬜ Queued | — |
 | T-006 | Export Engine (xlsx generation) | ⬜ Queued | — |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued | — |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued | — |
@@ -182,35 +182,6 @@
 **Status:** ✅ T-004 complete. Ready for T-005.
 
 *Last Builder Agent Run: 2026-03-16T22:14:00Z*
-
-</builder_annotation>
-
----
-
-## Builder Annotations
-<builder_annotation>
-
-### Run: 2026-03-16T22:22:00Z
-
-**Actions Performed:**
-- Read `.adsp/status_log.md` — identified T-005 as next pending task.
-- Read `.adsp/specs/spec.md` — confirmed Data CRUD API + Audit Trail scope.
-- No T-005 task file existed; created `.adsp/tasks/T-005/task.md` with full acceptance criteria and implementation instructions.
-- Implemented T-005: Data CRUD API + Audit Trail.
-  - Created `src/backend/app/schemas/data_row.py` — `RowInsert`, `RowUpdate`, `PaginatedRows` Pydantic models.
-  - Replaced stub `src/backend/app/routers/data.py` — full implementation of all 4 routes:
-    - `GET /api/tables/{table_name}/rows` — paginated, `include_deleted` query param.
-    - `POST /api/tables/{table_name}/rows` — UUID auto-generation, parameterized INSERT, per-column INSERT audit entries.
-    - `PUT /api/tables/{table_name}/rows/{row_id}` — diff-based UPDATE, per-changed-column UPDATE audit entries.
-    - `DELETE /api/tables/{table_name}/rows/{row_id}` — soft delete (`is_deleted=1`), DELETE audit entry.
-  - Internal helpers: `_validate_table_name()` (SQL injection guard), `_table_exists()`, `_fetch_row()`, `_write_audit()`.
-- Created `.adsp/tasks/T-005/report.md` with full implementation report and 12-step manual validation checklist.
-- Updated `.adsp/status_log.md` task grid: T-005 → ✅ Done.
-- Updated `README.md` — `data.py` description updated; T-005 marked Done.
-
-**Status:** ✅ T-005 complete. Ready for T-006.
-
-*Last Builder Agent Run: 2026-03-16T22:22:00Z*
 
 </builder_annotation>
 
