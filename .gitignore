@@ -78,9 +78,7 @@ src/frontend/.vite/
 # -----------------------------------------------------------------------------
 # Data files (runtime-generated; source templates should be committed separately)
 # -----------------------------------------------------------------------------
-# Uncomment lines below if you want to ignore generated data files:
-# src/data/*.xlsx
-# src/data/*.csv
+data/
 
 # Audit logs (runtime-generated)
 logs/

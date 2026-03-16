@@ -77,18 +77,18 @@ This means:
 ### How It Works (No SQL Database)
 
 ```
-┌──────────────┐        GET /api/config         ┌──────────────────┐
-│              │ ─────────────────────────────► │                  │
-│  React UI    │                                │  FastAPI Backend │
-│  (Vite/TS)   │ ◄───────────────────────────── │                  │
-│              │   JSON: entities, fields, opts  │                  │
-│  Renders:    │                                │  On startup:     │
-│  - Forms     │   POST/PUT/DELETE /api/{entity} │  1. Integrity    │
-│  - Tables    │ ─────────────────────────────► │     Check        │
-│  - Dropdowns │                                │  2. Build Pydantic│
-└──────────────┘ ◄───────────────────────────── │     models       │
-                      200 OK / 422 / 409         │  3. Init services│
-                                                 └────────┬─────────┘
+┌──────────────┐        GET /api/config          ┌───────────────────┐
+│              │ ──────────────────────────────► │                   │
+│  React UI    │                                 │  FastAPI Backend  │
+│  (Vite/TS)   │ ◄────────────────────────────── │                   │
+│              │   JSON: entities, fields, opts  │                   │
+│  Renders:    │                                 │  On startup:      │
+│  - Forms     │   POST/PUT/DELETE /api/{entity} │  1. Integrity     │
+│  - Tables    │ ──────────────────────────────► │     Check         │
+│  - Dropdowns │                                 │  2. Build Pydantic│
+└──────────────┘ ◄────────────────────────────── │     models        │
+                      200 OK / 422 / 409         │  3. Init services │
+                                                 └────────┬──────────┘
                                                           │ read/write (with FileLock)
                                                           ▼
                                                ┌─────────────────────┐
@@ -200,8 +200,8 @@ export SM_BASE_DIR=/path/to/project/root
 #### 2d. Start the backend server
 
 ```bash
-# From the project root
-python -m uvicorn src.backend.main:create_app --factory --host 0.0.0.0 --port 8000 --reload
+# From the project root (src/ is used as working directory so imports resolve correctly)
+cd src && python -m uvicorn backend.main:create_app --factory --host 0.0.0.0 --port 8000 --reload
 ```
 
 The API will be available at:
@@ -265,7 +265,7 @@ python -m pytest src/tests/stress_test.py -v
 # Terminal 1 — Backend
 python -m venv .venv && .venv\Scripts\activate   # Windows
 pip install fastapi uvicorn pydantic httpx openpyxl
-python -m uvicorn src.backend.main:create_app --factory --port 8000 --reload
+cd src && python -m uvicorn backend.main:create_app --factory --port 8000 --reload
 
 # Terminal 2 — Frontend
 cd src/frontend && npm install && npm run dev
