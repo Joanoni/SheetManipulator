@@ -34,3 +34,7 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 028| 2026-03-16 | Frontend: npx.cmd on Windows | Python subprocess.run requires `npx.cmd` (not `npx`) on Windows to execute npm scripts. | Approved |
 | 029| 2026-03-16 | DataGrid: createColumnHelper for type-safe columns | Using @tanstack/react-table v8's createColumnHelper provides type-safe column definitions over raw ColumnDef arrays. | Approved |
 | 030| 2026-03-16 | DataGrid: manualPagination=true | Server-side pagination is enforced via manualPagination:true; the API handles all data slicing, preventing client-side re-pagination of partial datasets. | Approved |
+| 031| 2026-03-16 | AuditLog: JSON Lines (.jsonl) format | JSONL (one JSON object per line) chosen over plain .log for machine-readability, easy parsing, and compatibility with log aggregation tools. | Approved |
+| 032| 2026-03-16 | AuditLog: RotatingFileHandler via logging module | Python's built-in logging.RotatingFileHandler is thread-safe and avoids implementing a custom file writer; handles rotation automatically. | Approved |
+| 033| 2026-03-16 | AuditLog: swallowed exceptions in DataService | Audit logging failures are caught silently (pass) to ensure logging never crashes the API. Consistent with the non-blocking performance requirement. | Approved |
+| 034| 2026-03-16 | AuditLog: Windows RotatingFileHandler file lock | On Windows, RotatingFileHandler holds the file open. Tests must explicitly close all handlers before the temp directory context exits to avoid PermissionError. | Approved |

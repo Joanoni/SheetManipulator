@@ -8,6 +8,7 @@ import json
 import os
 from typing import Any, Dict, List, Optional
 
+from backend.core.audit import AuditOperation, get_audit_logger
 from backend.storage.adapters import BaseStorageAdapter, get_adapter_for_entity
 
 
@@ -211,6 +212,18 @@ class DataService:
 
         adapter = self._get_adapter(entity_name)
         adapter.append_row(data)
+
+        # Audit log — row_index=-1 means appended at end
+        try:
+            get_audit_logger().log(
+                operation=AuditOperation.CREATE,
+                entity=entity_name,
+                row_index=-1,
+                payload=data,
+            )
+        except Exception:
+            pass  # Logging failures must never crash the API
+
         return data
 
     def update(
@@ -249,6 +262,18 @@ class DataService:
 
         adapter = self._get_adapter(entity_name)
         adapter.write_all(rows)
+
+        # Audit log
+        try:
+            get_audit_logger().log(
+                operation=AuditOperation.UPDATE,
+                entity=entity_name,
+                row_index=idx,
+                payload=updated_row,
+            )
+        except Exception:
+            pass  # Logging failures must never crash the API
+
         return updated_row
 
     def delete(self, entity_name: str, record_id: Any) -> Dict[str, Any]:
@@ -276,4 +301,16 @@ class DataService:
 
         adapter = self._get_adapter(entity_name)
         adapter.write_all(rows)
+
+        # Audit log
+        try:
+            get_audit_logger().log(
+                operation=AuditOperation.DELETE,
+                entity=entity_name,
+                row_index=idx,
+                payload=str(record_id),
+            )
+        except Exception:
+            pass  # Logging failures must never crash the API
+
         return deleted_row
