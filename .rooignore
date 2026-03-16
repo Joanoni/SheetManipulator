@@ -10,3 +10,4 @@ agent_framework/memory/
 agent_framework/tmp/
 agent_framework/tmp/
 .bundleignore
+src/frontend/node_modules/

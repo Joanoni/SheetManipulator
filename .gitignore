@@ -2,3 +2,5 @@
 agent_framework/tmp/
 agent_framework/bundles/
 **/__pycache__/
+**/node_modules/
+.env

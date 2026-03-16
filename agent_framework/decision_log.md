@@ -29,3 +29,6 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 023| 2026-03-16 | FastAPI: app.state for dependency injection | Services (DataService, ModelFactory, config) are stored in app.state instead of module-level globals, enabling proper isolation between test instances. | Approved |
 | 024| 2026-03-16 | FastAPI: TestClient as context manager | TestClient must be used as a context manager (`with TestClient(app)`) to trigger the lifespan and populate app.state before requests. | Approved |
 | 025| 2026-03-16 | Dependency: FastAPI + uvicorn + httpx | FastAPI 0.135.1, uvicorn 0.41.0, httpx installed for REST API + testing. Must be included in requirements.txt. | Approved |
+| 026| 2026-03-16 | Frontend: Vite + React + TypeScript scaffold | Created manual Vite scaffold instead of `npm create vite@latest` to maintain full control and avoid interactive prompts in automated execution. | Approved |
+| 027| 2026-03-16 | Frontend: vite-env.d.ts required | `/// <reference types="vite/client" />` must be in `src/vite-env.d.ts` for `import.meta.env` to type-check under tsc. | Approved |
+| 028| 2026-03-16 | Frontend: npx.cmd on Windows | Python subprocess.run requires `npx.cmd` (not `npx`) on Windows to execute npm scripts. | Approved |
