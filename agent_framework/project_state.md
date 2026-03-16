@@ -11,7 +11,7 @@ SheetManipulator architecture and task roadmap have been fully defined. The syst
 - [x] Framework Setup: Operational
 - [x] Task Infrastructure: Generated (Tasks 01 to 12)
 - [x] Phase 1 (Foundation): Completed
-- [ ] Phase 2 (Backend Core): Pending
+- [x] Phase 2 (Backend Core): Completed
 - [ ] Phase 3 (Frontend UX): Pending
 - [ ] Phase 4 (Security & Testing): Pending
 
@@ -22,6 +22,7 @@ SheetManipulator architecture and task roadmap have been fully defined. The syst
 4. [x] **Task 03**: Startup Integrity Check (Completed 2026-03-16).
 5. [x] **Task 04**: Pydantic Model Factory (Completed 2026-03-16).
 6. [x] **Task 05**: Storage Adapter Layer (Completed 2026-03-16).
+7. [x] **Task 06**: Service Layer / Business Logic (Completed 2026-03-16).
 *(Refer to `src/tasks/README.md` for the full execution flow list).*
 
 ## Known Issues & Technical Debt
