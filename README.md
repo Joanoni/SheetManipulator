@@ -57,7 +57,7 @@ src/
 │   │   ├── routers/
 │   │   │   ├── upload.py        # POST /upload, GET /uploads/... (T-003)
 │   │   │   ├── schema.py        # CRUD /schemas (T-004)
-│   │   │   ├── data.py          # Stub: CRUD /tables/{name}/rows
+│   │   │   ├── data.py          # CRUD /tables/{name}/rows + audit trail (T-005)
 │   │   │   └── export.py        # Stub: GET /tables/{name}/export
 │   │   ├── services/
 │   │   │   ├── ingestion.py     # Background ingestion pipeline (T-003)
@@ -67,6 +67,7 @@ src/
 │   │   └── schemas/
 │   │       ├── upload.py        # Pydantic: UploadRegistryRead, ProcessRequest
 │   │       ├── schema_definition.py # Pydantic: SchemaCreate, ColumnDefinitionRead, ColumnDisplayNameUpdate
+│   │       ├── data_row.py      # Pydantic: RowInsert, RowUpdate, PaginatedRows (T-005)
 │   │       └── audit.py         # Pydantic: AuditLogRead
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -90,7 +91,7 @@ src/
 | T-002 | Backend Core: DB Models + FastAPI App Factory | ✅ Done |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done |
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done |
-| T-005 | Data CRUD API + Audit Trail | ⬜ Queued |
+| T-005 | Data CRUD API + Audit Trail | ✅ Done |
 | T-006 | Export Engine (xlsx generation) | ⬜ Queued |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued |
