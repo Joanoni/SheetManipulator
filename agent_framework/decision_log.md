@@ -26,3 +26,6 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 020| 2026-03-16 | Dependency: openpyxl | openpyxl was not pre-installed; added as a required runtime dependency for ExcelAdapter. Must be included in requirements.txt/pyproject.toml. | Approved |
 | 021| 2026-03-16 | DataService: string-normalised ID comparison | Both stored and lookup IDs are compared as str() to prevent type-mismatch failures (e.g. "123" vs 123) without requiring rigid type enforcement at the service layer. | Approved |
 | 022| 2026-03-16 | DataService: PK immutable on update | update() always restores the original primary key value even if data contains a conflicting PK field, preventing silent key corruption. | Approved |
+| 023| 2026-03-16 | FastAPI: app.state for dependency injection | Services (DataService, ModelFactory, config) are stored in app.state instead of module-level globals, enabling proper isolation between test instances. | Approved |
+| 024| 2026-03-16 | FastAPI: TestClient as context manager | TestClient must be used as a context manager (`with TestClient(app)`) to trigger the lifespan and populate app.state before requests. | Approved |
+| 025| 2026-03-16 | Dependency: FastAPI + uvicorn + httpx | FastAPI 0.135.1, uvicorn 0.41.0, httpx installed for REST API + testing. Must be included in requirements.txt. | Approved |

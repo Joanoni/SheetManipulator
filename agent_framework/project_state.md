@@ -23,6 +23,7 @@ SheetManipulator architecture and task roadmap have been fully defined. The syst
 5. [x] **Task 04**: Pydantic Model Factory (Completed 2026-03-16).
 6. [x] **Task 05**: Storage Adapter Layer (Completed 2026-03-16).
 7. [x] **Task 06**: Service Layer / Business Logic (Completed 2026-03-16).
+8. [x] **Task 07**: FastAPI REST Endpoints (Completed 2026-03-16).
 *(Refer to `src/tasks/README.md` for the full execution flow list).*
 
 ## Known Issues & Technical Debt
