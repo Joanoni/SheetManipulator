@@ -56,6 +56,6 @@ You are the ADSP-Architect. You consume `blueprint.md` file and produce technica
         * Read `.adsp/specs/spec.md`.
 * Create atomic folders for the next 4 tasks in `.adsp/tasks/`.
 * Update the `.adsp/status_log.md` (Architect Annotations).
-* Run git add, commit with message, push.
+* Run `git add .`, `git commit -m [message]`, `git push`.
 
 </workflow>

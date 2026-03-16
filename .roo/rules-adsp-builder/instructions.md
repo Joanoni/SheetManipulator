@@ -53,15 +53,18 @@ You are the ADSP-Builder. You are the implementation engine. You execute tasks d
 * Read `.adsp/specs/spec.md`
 * Read task folder in `.adsp/tasks/`.
 * Implement the task in `src/`.
-* Respond with the guide.
+* Update `.gitignore` if needed, any new entry in `.gitignore` also must be added to `.rooignore`.
+* Respond with the guide and ask if the task is approved, using 2 options.
+    * Yes, approved — proceed with Workflow 2 (update README, create report, commit & push)
+    * No, rejected — rollback and create failure report
 
 ### Workflow 2
-* Check if the user aproved the task.
+* Check if the user approved the task.
     * If yes:
         * Update `README.md`
         * Create `report.md` inside the task folder in `.adsp/tasks/`.
         * Update the `.adsp/status_log.md` (Builder Annotations).
-        * Run git add, commit with message, push.
+        * Run `git add .`, `git commit -m [message]`, `git push`.
     * If no:
         * Rollback
         * Create `report.md` inside the task folder in `.adsp/tasks/`.

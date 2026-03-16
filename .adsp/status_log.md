@@ -56,9 +56,31 @@
 ## Builder Annotations
 <builder_annotation>
 
+### Run: 2026-03-16T21:55:00Z
 
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-001 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-001/task.md`.
+- Implemented T-001: Project Scaffold & Docker Compose.
+  - Created `src/backend/app/__init__.py`, `main.py`, `database.py`, `requirements.txt`, `Dockerfile`.
+  - Scaffolded `src/frontend/` via `npm create vite@latest` (React + TypeScript template, Vite 8).
+  - Installed `tailwindcss`, `postcss`, `autoprefixer`, `@tanstack/react-query`, `axios`.
+  - Created `src/frontend/src/App.tsx` (placeholder), `main.tsx`, `index.css` (Tailwind v4 CSS-first).
+  - Created `src/frontend/Dockerfile`.
+  - Created `src/docker-compose.yml` with `backend`, `frontend` services and `data-volume`.
+  - Updated `.gitignore` with `node_modules/`, `__pycache__/`, `*.sqlite`, `data/`.
+  - Removed `src/.gitkeep`.
+- User approved implementation.
+- Created `README.md` with project overview and development status table.
+- Created `.adsp/tasks/T-001/report.md` with full implementation report.
+- Updated `.adsp/status_log.md` (this entry).
 
-*Last Builder Agent Run: -*
+**Deviation Note:**
+> `@tailwindcss/vite` was incompatible with Vite 8 (scaffolded by `create-vite@9`). Used standalone `tailwindcss` + `postcss` + `autoprefixer` with Tailwind v4 CSS-first configuration instead.
+
+**Status:** ✅ T-001 complete. Ready for T-002.
+
+*Last Builder Agent Run: 2026-03-16T21:55:00Z*
 
 </builder_annotation>
 
@@ -69,7 +91,7 @@
 
 | ID | Task Description | Status | Evidence |
 | :--- | :--- | :--- | :--- |
-| T-001 | Project Scaffold & Docker Compose | 🟡 Pending | `.adsp/tasks/T-001/task.md` |
+| T-001 | Project Scaffold & Docker Compose | ✅ Done | `.adsp/tasks/T-001/report.md` |
 | T-002 | Backend Core: DB Models + FastAPI App Factory | 🟡 Pending | `.adsp/tasks/T-002/task.md` |
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | 🟡 Pending | `.adsp/tasks/T-003/task.md` |
 | T-004 | Schema Management API + Dynamic DDL | 🟡 Pending | `.adsp/tasks/T-004/task.md` |

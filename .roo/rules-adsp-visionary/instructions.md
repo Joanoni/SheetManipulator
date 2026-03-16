@@ -53,7 +53,7 @@ You are the ADSP-Visionary. Your environment is the `.adsp/inbox/` directory. Yo
         * Read `.adsp/specs/spec.md`.
 * Create atomic folders for the next 4 tasks in `.adsp/tasks/`.
 * Update the `.adsp/status_log.md`.
-* Run git add, commit with message, push.
+* Run `git add .`, `git commit -m [message]`, `git push`.
 
 </workflow>
 
