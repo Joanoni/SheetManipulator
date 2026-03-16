@@ -18,7 +18,7 @@ SheetManipulator architecture and task roadmap have been fully defined. The syst
 ## Roadmap & Active Tasks
 1. [x] Definition of 12 atomic tasks covering full stack development.
 2. [x] **Task 01**: Expansion of Config Schema (Completed 2026-03-16).
-3. [ ] **Task 02**: Universal Lock Mechanism (Pending).
+3. [x] **Task 02**: Universal Lock Mechanism (Completed 2026-03-16).
 4. [ ] **Task 03**: Startup Integrity Check (Pending).
 *(Refer to `src/tasks/README.md` for the full execution flow list).*
 

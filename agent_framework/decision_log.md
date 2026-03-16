@@ -14,3 +14,5 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 008| 2026-03-15 | Server-Side Pagination Only | Client-side pagination rejected for data grids to prevent browser DOM crashes when loading large CSV/XLSX datasets. | Approved |
 | 009| 2026-03-16 | Config Location: src/config.json | Task 01 definition referenced `agent_framework/config.json`, but per protocol, all implementation files must reside in `src/`. Config placed at `src/config.json`. | Approved |
 | 010| 2026-03-16 | Config Schema: null over absent for options | Fields that have no dropdown options use `"options": null` rather than omitting the key, ensuring consistent schema parsing across all entities. | Approved |
+| 011| 2026-03-16 | FileLock: os.O_CREAT|O_EXCL for atomic creation | Using `os.open` with `O_CREAT|O_EXCL` ensures atomic, race-condition-free lock file creation at the OS level, avoiding the TOCTOU issue of check-then-create patterns. | Approved |
+| 012| 2026-03-16 | FileLock: PID written to .lock file | Writing the owning process PID to the `.lock` file enables diagnostics without adding runtime complexity. | Approved |
