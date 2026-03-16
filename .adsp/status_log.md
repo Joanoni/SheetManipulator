@@ -154,7 +154,7 @@
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done | `.adsp/tasks/T-003/report.md` |
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done | `.adsp/tasks/T-004/report.md` |
 | T-005 | Data CRUD API + Audit Trail | ✅ Done | `.adsp/tasks/T-005/report.md` |
-| T-006 | Export Engine (xlsx generation) | ⬜ Queued | — |
+| T-006 | Export Engine (xlsx generation) | ✅ Done | `.adsp/tasks/T-006/report.md` |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued | — |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued | — |
 
@@ -255,6 +255,30 @@
 **Status:** ✅ T-005 complete. Ready for T-006.
 
 *Last Builder Agent Run: 2026-03-16T22:49:00Z*
+
+</builder_annotation>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-16T23:14:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-006 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-006/task.md`.
+- Implemented T-006: Export Engine (xlsx Generation).
+  - Modified `src/backend/app/services/export.py` — appended `export_table_to_xlsx()` async function; queries `schema_definitions` for ordered column metadata, fetches non-deleted rows via raw SQL ordered by `_row_id`, builds `openpyxl` workbook with `display_name` headers, serializes to `io.BytesIO` and returns raw bytes.
+  - Replaced stub `src/backend/app/routers/export.py` — full `GET /api/tables/{table_name}/export` implementation; verifies table existence in `schema_definitions` (HTTP 404 if absent), calls `export_table_to_xlsx()`, returns `StreamingResponse` with correct `Content-Type` and `Content-Disposition` headers.
+  - Confirmed `get_db()` already present in `src/backend/app/database.py` — no change needed.
+- Created `.adsp/tasks/T-006/report.md` with full implementation report and 12-step manual validation checklist.
+- Updated `README.md` — updated export router and service descriptions; marked T-006 as Done.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-006 complete. Ready for T-007.
+
+*Last Builder Agent Run: 2026-03-16T23:14:00Z*
 
 </builder_annotation>
 

@@ -58,11 +58,11 @@ src/
 │   │   │   ├── upload.py        # POST /upload, GET /uploads/... (T-003)
 │   │   │   ├── schema.py        # CRUD /schemas (T-004)
 │   │   │   ├── data.py          # CRUD /tables/{name}/rows + audit (T-005)
-│   │   │   └── export.py        # Stub: GET /tables/{name}/export
+│   │   │   └── export.py        # GET /tables/{name}/export → StreamingResponse .xlsx (T-006)
 │   │   ├── services/
 │   │   │   ├── ingestion.py     # Background ingestion pipeline (T-003)
 │   │   │   ├── validation.py    # Validation engine, short-circuit @ 1,000 (T-003)
-│   │   │   ├── export.py        # Error report generator (T-003)
+│   │   │   ├── export.py        # Error report generator + export_table_to_xlsx() (T-003, T-006)
 │   │   │   └── dynamic_ddl.py   # CREATE TABLE from schema_definitions (T-004)
 │   │   └── schemas/
 │   │       ├── upload.py        # Pydantic: UploadRegistryRead, ProcessRequest
@@ -92,7 +92,7 @@ src/
 | T-003 | Ingestion Pipeline: Upload, Cold Storage & Validation Engine | ✅ Done |
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done |
 | T-005 | Data CRUD API + Audit Trail | ✅ Done |
-| T-006 | Export Engine (xlsx generation) | ⬜ Queued |
+| T-006 | Export Engine (xlsx generation) | ✅ Done |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued |
 
