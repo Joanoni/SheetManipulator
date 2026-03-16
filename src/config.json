@@ -1,0 +1,121 @@
+{
+  "entities": [
+    {
+      "name": "Employees",
+      "storage": {
+        "file_path": "data/employees.xlsx",
+        "format": "xlsx",
+        "settings": {
+          "sheet_name": "Sheet1",
+          "header_row": 1
+        }
+      },
+      "fields": [
+        {
+          "name": "employee_id",
+          "type": "string",
+          "required": true,
+          "is_primary_id": true,
+          "options": null
+        },
+        {
+          "name": "full_name",
+          "type": "string",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "department",
+          "type": "string",
+          "required": true,
+          "is_primary_id": false,
+          "options": ["Engineering", "Marketing", "Sales", "HR", "Finance"]
+        },
+        {
+          "name": "age",
+          "type": "int",
+          "required": false,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "hire_date",
+          "type": "date",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "salary",
+          "type": "float",
+          "required": false,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "storage": {
+        "file_path": "data/products.csv",
+        "format": "csv",
+        "settings": {
+          "delimiter": ",",
+          "encoding": "utf-8"
+        }
+      },
+      "fields": [
+        {
+          "name": "sku",
+          "type": "string",
+          "required": true,
+          "is_primary_id": true,
+          "options": null
+        },
+        {
+          "name": "product_name",
+          "type": "string",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "required": true,
+          "is_primary_id": false,
+          "options": ["Electronics", "Clothing", "Food", "Books", "Tools"]
+        },
+        {
+          "name": "price",
+          "type": "float",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "stock_quantity",
+          "type": "int",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        },
+        {
+          "name": "is_available",
+          "type": "boolean",
+          "required": true,
+          "is_primary_id": false,
+          "options": null
+        }
+      ]
+    }
+  ]
+}

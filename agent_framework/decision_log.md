@@ -12,3 +12,5 @@ This file tracks the Architectural Decision Records (AgDR) for the project.
 | 006| 2026-03-15 | Atomic Task Management | Adopted a `src/tasks` folder structure with JSON statuses and MD definitions to guide AI agents sequentially and transparently. | Approved |
 | 007| 2026-03-15 | Logical IDs over Row Indices | Mandated the use of a user-defined `is_primary_id` for CRUD operations. Row indices are unsafe in concurrent flat-file operations. | Approved |
 | 008| 2026-03-15 | Server-Side Pagination Only | Client-side pagination rejected for data grids to prevent browser DOM crashes when loading large CSV/XLSX datasets. | Approved |
+| 009| 2026-03-16 | Config Location: src/config.json | Task 01 definition referenced `agent_framework/config.json`, but per protocol, all implementation files must reside in `src/`. Config placed at `src/config.json`. | Approved |
+| 010| 2026-03-16 | Config Schema: null over absent for options | Fields that have no dropdown options use `"options": null` rather than omitting the key, ensuring consistent schema parsing across all entities. | Approved |

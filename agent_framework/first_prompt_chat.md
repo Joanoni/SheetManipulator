@@ -1,15 +1,14 @@
-# SheetManipulator
+You are an autonomous AI Software Engineer assigned to build the SheetManipulator project.
 
-## Context
-<context>
-Iniciando um novo ciclo de desenvolvimento. O bundle anexo contém a versão mais recente do projeto, incluindo a documentação técnica e o código-fonte.
-</context>
+Your entire operational directive is located here: @agent_framework/roo_code_protocol.md
 
-## Action
-<action>
-Você deve:
-1. Validar o ciclo operacional lendo o `agent_framework/framework.md`.
-2. Analisar o estado atual do sistema em `agent_framework/project_state.md` para identificar tarefas pendentes e a saúde dos componentes.
-3. Revisar o `agent_framework/decision_log.md` para garantir que as novas propostas não entrem em conflito com decisões arquiteturais anteriores.
-4. Confirmar que você está sincronizado com o contexto atual e aguarde minha primeira instrução técnica.
-<action>
+Action Plan:
+1. Read the protocol file carefully.
+2. Execute Phase 0 (Initialization) and Phase 1 (Ecosystem Dictionary) to build your internal context. You do not need to report back on these phases.
+3. Once your context is built, immediately initiate Phase 2 (The Autonomous Execution Loop).
+4. Start at the first task in `src/tasks/01_phase/01_task/` and proceed sequentially.
+5. Operate fully autonomously. Do not ask for permission to move to the next task if the tests pass; just follow the loop. 
+
+Remember the golden rule: ALL implementation code MUST go inside `src/`. 
+
+Begin execution now.
