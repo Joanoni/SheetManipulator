@@ -155,10 +155,40 @@
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done | `.adsp/tasks/T-004/report.md` |
 | T-005 | Data CRUD API + Audit Trail | ✅ Done | `.adsp/tasks/T-005/report.md` |
 | T-006 | Export Engine (xlsx generation) | ✅ Done | `.adsp/tasks/T-006/report.md` |
-| T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued | — |
+| T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done | `.adsp/tasks/T-007/report.md` |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued | — |
 
 </task_grid>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-16T23:23:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-007 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-007/task.md`.
+- Implemented T-007: Frontend: Upload Wizard + Schema Mapping UI.
+  - Installed `react-router-dom` (4 packages) in `src/frontend/`.
+  - Created `src/frontend/src/api/client.ts` — Axios base client with `VITE_API_URL`.
+  - Created `src/frontend/src/api/ingestion.ts` — `uploadFile`, `getWorksheets`, `processUpload`, `getUploadStatus` typed functions.
+  - Created `src/frontend/src/api/schema.ts` — `createSchema`, `listSchemas`, `getSchema` + full TypeScript interfaces (`ColumnCreate`, `SchemaCreate`, `ColumnDefinitionRead`, `SchemaRead`).
+  - Created `src/frontend/src/components/UploadWizard/StepIndicator.tsx` — horizontal step progress bar with completed/active/pending states.
+  - Created `src/frontend/src/components/UploadWizard/UploadWizard.tsx` — full 4-step wizard: drag-and-drop upload → worksheet radio selection → dynamic schema builder → status polling with terminal state handling.
+  - Created `src/frontend/src/pages/IngestionPage.tsx` — page wrapper for `UploadWizard`.
+  - Created `src/frontend/src/pages/ManagePage.tsx` — stub placeholder for T-008.
+  - Replaced `src/frontend/src/App.tsx` — `BrowserRouter` + `Routes` shell with top nav `NavLink` components.
+  - Ran `npx tsc --noEmit` — exit code 0, zero type errors.
+- Created `.adsp/tasks/T-007/report.md` with full implementation report and 13-step manual validation checklist.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-007 complete. Ready for T-008.
+
+*Last Builder Agent Run: 2026-03-16T23:23:00Z*
+
+</builder_annotation>
 
 ---
 

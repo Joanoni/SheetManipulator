@@ -74,7 +74,18 @@ src/
 ├── frontend/
 │   ├── src/
 │   │   ├── main.tsx
-│   │   └── App.tsx              # Placeholder
+│   │   ├── App.tsx              # BrowserRouter shell + NavBar (T-007)
+│   │   ├── api/
+│   │   │   ├── client.ts        # Axios base client (T-007)
+│   │   │   ├── ingestion.ts     # Upload/process/status API calls (T-007)
+│   │   │   └── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007)
+│   │   ├── components/
+│   │   │   └── UploadWizard/
+│   │   │       ├── UploadWizard.tsx   # 4-step ingestion wizard (T-007)
+│   │   │       └── StepIndicator.tsx  # Horizontal step progress bar (T-007)
+│   │   └── pages/
+│   │       ├── IngestionPage.tsx # Upload wizard page (T-007)
+│   │       └── ManagePage.tsx    # Stub — full implementation in T-008
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   └── package.json
@@ -93,7 +104,7 @@ src/
 | T-004 | Schema Management API + Dynamic DDL | ✅ Done |
 | T-005 | Data CRUD API + Audit Trail | ✅ Done |
 | T-006 | Export Engine (xlsx generation) | ✅ Done |
-| T-007 | Frontend: Upload Wizard + Schema Mapping UI | ⬜ Queued |
+| T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued |
 
 ---
