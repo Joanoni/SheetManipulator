@@ -1,6 +1,6 @@
-# Decision Log (ADR)
+# Decision Log (AgDR)
 
-This file tracks the Architectural Decision Records (ADR) for the project.
+This file tracks the Architectural Decision Records (AgDR) for the project.
 
 | ID | Date | Decision | Rationale | Status |
 |----|------|----------|-----------|--------|
