@@ -53,3 +53,18 @@ export const listSchemas = () =>
 // GET /api/schemas/{table_name} → ColumnDefinition[]
 export const getSchema = (tableName: string) =>
   api.get<ColumnDefinition[]>(`/api/schemas/${tableName}`)
+
+// PUT /api/schemas/{table_name}/columns/{column_id}
+export interface ColumnDisplayNameUpdate {
+  display_name: string
+}
+
+export const updateColumnDisplayName = (
+  tableName: string,
+  columnId: number,
+  body: ColumnDisplayNameUpdate
+) =>
+  api.put<ColumnDefinition>(
+    `/api/schemas/${tableName}/columns/${columnId}`,
+    body
+  )

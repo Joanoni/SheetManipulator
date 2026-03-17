@@ -78,7 +78,7 @@ src/
 │   │   ├── api/
 │   │   │   ├── client.ts        # Axios base client (T-007)
 │   │   │   ├── ingestion.ts     # Upload/process/status API calls (T-007)
-│   │   │   ├── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007, T-008)
+│   │   │   ├── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007, T-008, T-010)
 │   │   │   └── data.ts          # Row CRUD + audit + export API calls (T-008)
 │   │   ├── components/
 │   │   │   ├── UploadWizard/
@@ -88,11 +88,13 @@ src/
 │   │   │   │   ├── DataTable.tsx      # Dynamic CRUD grid with pagination (T-008)
 │   │   │   │   ├── CellEditor.tsx     # Type-aware cell input (T-008)
 │   │   │   │   └── AddRowModal.tsx    # Insert row modal form (T-008)
-│   │   │   └── AuditDrawer/
-│   │   │       └── AuditDrawer.tsx    # Audit log side panel (T-008)
+│   │   │   ├── AuditDrawer/
+│   │   │   │   └── AuditDrawer.tsx    # Audit log side panel (T-008)
+│   │   │   └── SchemaPanel/
+│   │   │       └── SchemaPanel.tsx    # Inline column display name editor (T-010)
 │   │   └── pages/
 │   │       ├── IngestionPage.tsx # Upload wizard page (T-007)
-│   │       └── ManagePage.tsx    # Table selector + DataTable CRUD interface (T-008)
+│   │       └── ManagePage.tsx    # Table selector + SchemaPanel + DataTable (T-008, T-010)
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   └── package.json
@@ -114,7 +116,7 @@ src/
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done |
 | T-009 | Static File Serving for Error Reports | ✅ Done |
-| T-010 | Schema Column Display Name Edit UI | ⏳ Pending |
+| T-010 | Schema Column Display Name Edit UI | ✅ Done |
 | T-011 | Upload History Page | ⏳ Pending |
 | T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending |
 

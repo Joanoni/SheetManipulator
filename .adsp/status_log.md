@@ -158,7 +158,7 @@
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done | `.adsp/tasks/T-007/report.md` |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done | `.adsp/tasks/T-008/report.md` |
 | T-009 | Static File Serving for Error Reports | ✅ Done | `.adsp/tasks/T-009/report.md` |
-| T-010 | Schema Column Display Name Edit UI | ⏳ Pending | `.adsp/tasks/T-010/task.md` |
+| T-010 | Schema Column Display Name Edit UI | ✅ Done | `.adsp/tasks/T-010/report.md` |
 | T-011 | Upload History Page | ⏳ Pending | `.adsp/tasks/T-011/task.md` |
 | T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending | `.adsp/tasks/T-012/task.md` |
 
@@ -413,6 +413,31 @@
 **Status:** ✅ T-009 complete. Ready for T-010.
 
 *Last Builder Agent Run: 2026-03-17T01:31:00Z*
+
+</builder_annotation>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T01:35:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-010 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-010/task.md`.
+- Implemented T-010: Schema Column Display Name Edit UI.
+  - Extended `src/frontend/src/api/schema.ts` — added `ColumnDisplayNameUpdate` interface and `updateColumnDisplayName(tableName, columnId, body)` function calling `PUT /api/schemas/{table_name}/columns/{column_id}`.
+  - Created `src/frontend/src/components/SchemaPanel/SchemaPanel.tsx` — compact table rendering all columns with Display Name (inline editable), System Name (read-only monospace), Type (color-coded badge), Required (✓/—), PK (✓/—), and Actions columns. Inline edit state with `editingId`/`editValue`/`error`. Client-side empty-value guard with inline error message. `useMutation` with TanStack Query v5; animated SVG spinner on Save button while `isPending`. Keyboard shortcuts: Enter=save, Escape=cancel. Server errors surfaced inline.
+  - Updated `src/frontend/src/pages/ManagePage.tsx` — imported `useQueryClient` and `SchemaPanel`; added `schemaOpen` boolean state (resets on table switch); collapsible "⚙ Schema — {tableName}" section above `DataTable`; `handleSchemaUpdated()` calls `queryClient.invalidateQueries({ queryKey: ['schema', selectedTable] })` to refresh DataTable headers.
+  - Ran `npx tsc --noEmit` — exit code 0, zero type errors.
+- Created `.adsp/tasks/T-010/report.md` with full implementation report and 15-step manual validation checklist.
+- Updated `README.md` — added `SchemaPanel/` to project structure; updated `schema.ts` and `ManagePage.tsx` annotations; marked T-010 as Done.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-010 complete. Ready for T-011.
+
+*Last Builder Agent Run: 2026-03-17T01:35:00Z*
 
 </builder_annotation>
 
