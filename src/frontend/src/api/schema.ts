@@ -14,6 +14,7 @@ export interface SchemaCreate {
   columns: ColumnCreate[]
 }
 
+// Used by T-007 UploadWizard (response from POST /api/schemas)
 export interface ColumnDefinitionRead {
   id: number
   table_system_name: string
@@ -30,11 +31,25 @@ export interface SchemaRead {
   columns: ColumnDefinitionRead[]
 }
 
+// Used by T-008 DataTable (matches GET /api/schemas/{table_name} → ColumnDefinitionRead[])
+export interface ColumnDefinition {
+  id: number
+  table_system_name: string
+  column_system_name: string
+  display_name: string
+  data_type: 'String' | 'Integer' | 'Float' | 'Boolean' | 'Date'
+  is_mandatory: boolean
+  is_primary_key: boolean
+  column_order: number
+}
+
 export const createSchema = (payload: SchemaCreate) =>
-  api.post('/api/schemas', payload)
+  api.post<ColumnDefinitionRead[]>('/api/schemas', payload)
 
+// GET /api/schemas → { tables: string[] }
 export const listSchemas = () =>
-  api.get<SchemaRead[]>('/api/schemas')
+  api.get<{ tables: string[] }>('/api/schemas')
 
+// GET /api/schemas/{table_name} → ColumnDefinition[]
 export const getSchema = (tableName: string) =>
-  api.get<SchemaRead>(`/api/schemas/${tableName}`)
+  api.get<ColumnDefinition[]>(`/api/schemas/${tableName}`)

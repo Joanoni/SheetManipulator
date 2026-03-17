@@ -156,9 +156,42 @@
 | T-005 | Data CRUD API + Audit Trail | ✅ Done | `.adsp/tasks/T-005/report.md` |
 | T-006 | Export Engine (xlsx generation) | ✅ Done | `.adsp/tasks/T-006/report.md` |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done | `.adsp/tasks/T-007/report.md` |
-| T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued | — |
+| T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done | `.adsp/tasks/T-008/report.md` |
 
 </task_grid>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T00:01:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-008 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-008/task.md`.
+- Implemented T-008: Frontend: Dynamic DataTable CRUD + Audit Drawer.
+  - Fixed `src/frontend/src/api/schema.ts` — corrected `listSchemas()` return type to `{ tables: string[] }` and `getSchema()` return type to `ColumnDefinition[]` to match actual backend API responses; added `ColumnDefinition` interface export.
+  - Created `src/frontend/src/api/data.ts` — `PaginatedRows` + `AuditEntry` interfaces; `listRows`, `insertRow`, `updateRow`, `deleteRow`, `exportTable`, `getAuditLog` typed API functions.
+  - Updated `src/frontend/src/main.tsx` — added `QueryClient` + `QueryClientProvider` wrapping `<App />`.
+  - Created `src/frontend/src/components/DataTable/CellEditor.tsx` — type-aware cell input: checkbox (Boolean), number step=1 (Integer), number step=any (Float), date picker (Date), text (String).
+  - Created `src/frontend/src/components/DataTable/AddRowModal.tsx` — modal overlay with per-column `CellEditor` fields; mandatory columns marked with `*`; calls `insertRow()` on submit.
+  - Created `src/frontend/src/components/AuditDrawer/AuditDrawer.tsx` — fixed right-side panel; fetches audit log via TanStack Query; color-coded operation badges; backdrop overlay.
+  - Created `src/frontend/src/components/DataTable/DataTable.tsx` — full CRUD grid: `useQuery` with `placeholderData` for smooth pagination; inline edit mode with `CellEditor`; Save/Cancel/Delete/History/Export actions; `window.confirm` delete guard; blob export with programmatic `<a download>` click; `AuditDrawer` + `AddRowModal` integration.
+  - Replaced `src/frontend/src/pages/ManagePage.tsx` — table selector buttons; `DataTable` rendered when table + schema loaded; empty state messages.
+  - Ran `npx tsc --noEmit` — exit code 0, zero type errors.
+- Created `.adsp/tasks/T-008/report.md` with full implementation report and 20-step manual validation checklist.
+- Updated `README.md` — added `DataTable/`, `AuditDrawer/`, `data.ts` to project structure; marked T-008 as Done.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Deviation Note:**
+> Pre-existing `schema.ts` (from T-007) had incorrect return types for `listSchemas` (`SchemaRead[]` instead of `{ tables: string[] }`) and `getSchema` (`SchemaRead` instead of `ColumnDefinition[]`). Corrected to match actual backend API contract as part of this task.
+
+**Status:** ✅ T-008 complete. All 8 tasks done — project fully implemented.
+
+*Last Builder Agent Run: 2026-03-17T00:01:00Z*
+
+</builder_annotation>
 
 ---
 

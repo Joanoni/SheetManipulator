@@ -78,14 +78,21 @@ src/
 │   │   ├── api/
 │   │   │   ├── client.ts        # Axios base client (T-007)
 │   │   │   ├── ingestion.ts     # Upload/process/status API calls (T-007)
-│   │   │   └── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007)
+│   │   │   ├── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007, T-008)
+│   │   │   └── data.ts          # Row CRUD + audit + export API calls (T-008)
 │   │   ├── components/
-│   │   │   └── UploadWizard/
-│   │   │       ├── UploadWizard.tsx   # 4-step ingestion wizard (T-007)
-│   │   │       └── StepIndicator.tsx  # Horizontal step progress bar (T-007)
+│   │   │   ├── UploadWizard/
+│   │   │   │   ├── UploadWizard.tsx   # 4-step ingestion wizard (T-007)
+│   │   │   │   └── StepIndicator.tsx  # Horizontal step progress bar (T-007)
+│   │   │   ├── DataTable/
+│   │   │   │   ├── DataTable.tsx      # Dynamic CRUD grid with pagination (T-008)
+│   │   │   │   ├── CellEditor.tsx     # Type-aware cell input (T-008)
+│   │   │   │   └── AddRowModal.tsx    # Insert row modal form (T-008)
+│   │   │   └── AuditDrawer/
+│   │   │       └── AuditDrawer.tsx    # Audit log side panel (T-008)
 │   │   └── pages/
 │   │       ├── IngestionPage.tsx # Upload wizard page (T-007)
-│   │       └── ManagePage.tsx    # Stub — full implementation in T-008
+│   │       └── ManagePage.tsx    # Table selector + DataTable CRUD interface (T-008)
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   └── package.json
@@ -105,7 +112,7 @@ src/
 | T-005 | Data CRUD API + Audit Trail | ✅ Done |
 | T-006 | Export Engine (xlsx generation) | ✅ Done |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done |
-| T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ⬜ Queued |
+| T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done |
 
 ---
 
