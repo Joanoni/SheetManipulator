@@ -1,16 +1,9 @@
 # Review R-001 — Frontend Import Error: `react-router-dom` Not Found
 
-**Review ID:** R-001
-**Date:** 2026-03-17T02:08:00Z
-**Origin File:** `.adsp/reviews/R-001/origin/error.txt`
-**Reported By:** User (via `.adsp/inbox/review_features/error.txt`)
-
----
-
-## 📋 Issue Summary
-
-After running the Quickstart (Docker) commands from `README.md`, the frontend fails to load with the following Vite import-analysis error:
-
+**Date:** 2026-03-17T02:16:00Z
+**Severity:** 🔴 Critical
+**Source:** `.adsp/inbox/review_features/error.txt`
+**Reported Error:**
 ```
 [plugin:vite:import-analysis] Failed to resolve import "react-router-dom" from "src/App.tsx". Does the file exist?
 ```
@@ -19,57 +12,92 @@ After running the Quickstart (Docker) commands from `README.md`, the frontend fa
 
 ## 🔍 Root Cause Analysis
 
-### What Happened
+### Symptom
+User ran `docker compose -f src/docker-compose.yml up --build` per the README Quickstart. Docker build succeeded. Opening the frontend at `http://localhost:5173` produced a Vite import resolution failure for `react-router-dom`.
 
-According to the Builder annotation for **T-007** (Run: `2026-03-16T23:23:00Z`), `react-router-dom` was installed by running `npm install react-router-dom` inside the `src/frontend/` directory on the **host machine**. This correctly added the package to `src/frontend/package.json` and `src/frontend/package-lock.json`.
+### Investigation
 
-However, the **Docker build** for the frontend service uses a `Dockerfile` that runs `npm ci` (or `npm install`) based on the `package.json` at build time. The critical issue is:
+| File | Finding |
+| :--- | :--- |
+| `src/frontend/package.json` | `react-router-dom: ^7.13.1` is correctly listed under `dependencies`. |
+| `src/frontend/package-lock.json` | Contains 3 references to `react-router-dom` — lockfile is in sync. |
+| `src/frontend/Dockerfile` | Runs `npm ci` before `COPY . .` — installs packages into container `/app/node_modules` at build time. |
+| `src/docker-compose.yml` | Mounts `./frontend:/app` (bind mount) AND declares `/app/node_modules` as an anonymous volume. |
 
-> **`react-router-dom` was installed locally on the host but the `src/frontend/node_modules/` directory is either excluded from the Docker build context (via `.dockerignore` or `.gitignore`) or the Docker image's `npm install` step is not picking up the updated `package-lock.json` correctly.**
+### Root Cause: Docker Volume Shadowing
 
-More specifically, the most likely cause is one of the following:
+The `docker-compose.yml` frontend service declares two volume entries:
 
-| # | Scenario | Likelihood |
-| :--- | :--- | :--- |
-| 1 | `src/frontend/node_modules/` is bind-mounted or volume-shadowed in `docker-compose.yml`, overwriting the container's installed modules with the host's (possibly stale) `node_modules/` | **High** |
-| 2 | The `src/frontend/Dockerfile` does not copy `package-lock.json` before running `npm install`, causing a fresh install that misses `react-router-dom` if `package.json` was not updated | **Medium** |
-| 3 | `react-router-dom` was installed locally but `package.json` was not saved with `--save` flag, so it is absent from the dependency list used during Docker build | **Low** (Builder used standard `npm install react-router-dom` which auto-saves) |
+```yaml
+volumes:
+  - ./frontend:/app          # bind mount — overwrites /app at runtime
+  - /app/node_modules        # anonymous volume — intended to protect node_modules
+```
 
-### Supporting Evidence from Status Log
+The intent of the anonymous volume `/app/node_modules` is to preserve the `node_modules/` directory installed during the Docker image build, preventing the host bind mount from shadowing it. However, **this pattern only works reliably when the anonymous volume has been previously populated** (i.e., on a subsequent `docker compose up` after the first run).
 
-- T-007 Builder annotation explicitly states: *"Installed `react-router-dom` (4 packages) in `src/frontend/`"* — confirming the install was performed on the host.
-- T-007 also confirms `npx tsc --noEmit` passed with zero type errors on the host, meaning the package was resolvable locally.
-- The error only manifests when running via Docker, pointing to a container-build isolation issue rather than a code defect.
+On a **fresh `docker compose up --build`** (as instructed in the README Quickstart):
+
+1. The image is built — `npm ci` installs all packages including `react-router-dom` into `/app/node_modules` inside the image layer.
+2. At container startup, Docker applies the bind mount `./frontend:/app`, which **replaces the entire `/app` directory** with the host filesystem contents.
+3. The anonymous volume `/app/node_modules` is created **empty** (no prior data) and mounted on top of the bind mount.
+4. The result: `/app/node_modules` is an **empty anonymous volume** — the host's `node_modules/` (which may not exist or may be incomplete) is never used, and the image-built `node_modules/` is discarded.
+5. Vite starts and cannot resolve `react-router-dom` because `node_modules/` is empty.
+
+### Why It Appeared to Work Previously
+The TypeScript check (`npx tsc --noEmit`) was run on the **host** machine where `node_modules/` was populated by the host `npm install`. The Docker container environment was never validated.
+
+---
+
+## 📋 Affected Files
+
+| File | Issue |
+| :--- | :--- |
+| [`src/docker-compose.yml`](../../src/docker-compose.yml) | Bind mount `./frontend:/app` shadows the container's `node_modules/` on fresh builds. |
+| [`src/frontend/Dockerfile`](../../src/frontend/Dockerfile) | Build-time `npm ci` output is discarded at runtime due to volume ordering. |
 
 ---
 
 ## 🛠️ Recommended Fix
 
-The ADSP-Builder should investigate and resolve the following:
+**Option A — Remove the bind mount (Recommended for Docker Quickstart)**
 
-1. **Verify `src/frontend/Dockerfile`** — Ensure it copies `package.json` AND `package-lock.json` before running `npm ci` (preferred over `npm install` for reproducible builds).
-2. **Verify `src/docker-compose.yml`** — Ensure no volume mount is shadowing `/app/node_modules` inside the frontend container with the host's `node_modules/`.
-3. **Verify `src/frontend/package.json`** — Confirm `react-router-dom` appears under `dependencies`.
-4. **Rebuild with `--no-cache`** — After any fix, run `docker compose -f src/docker-compose.yml build --no-cache` to ensure a clean layer rebuild.
+Remove the `./frontend:/app` bind mount from `docker-compose.yml`. The container will use the image-built copy of the frontend. Hot-reload will not be available in Docker mode, but the Quickstart will work correctly.
+
+```yaml
+frontend:
+  build: ./frontend
+  ports:
+    - "5173:5173"
+  environment:
+    - VITE_API_URL=http://localhost:8000
+  depends_on:
+    - backend
+```
+
+**Option B — Use a named volume for `node_modules` with explicit population**
+
+Keep the bind mount for hot-reload but ensure `node_modules` is populated before the bind mount takes effect by using a startup entrypoint that runs `npm install` inside the container:
+
+```yaml
+volumes:
+  - ./frontend:/app
+  - frontend_node_modules:/app/node_modules
+```
+
+This requires a named volume declaration and an entrypoint script — more complex and not suitable for a simple Quickstart.
+
+**Recommended action:** Apply Option A. The README already documents a separate "Development (Local)" workflow for hot-reload. The Docker Quickstart should be a zero-friction path.
 
 ---
 
-## 📊 Impact Assessment
+## 🎯 Action Required
 
-| Dimension | Assessment |
-| :--- | :--- |
-| **Severity** | 🔴 Critical — Frontend is completely non-functional via Docker |
-| **Scope** | Frontend only; backend is unaffected |
-| **User Impact** | Blocks all UI workflows (Upload, Manage, History) |
-| **Root in Code** | No — the application code is correct; this is a build/packaging defect |
-| **Tasks Affected** | T-007 (react-router-dom install), T-001 (Docker Compose scaffold) |
+**Route to:** ADSP-Builder
+**Task scope:** Modify [`src/docker-compose.yml`](../../src/docker-compose.yml) — remove `./frontend:/app` bind mount and `/app/node_modules` anonymous volume from the `frontend` service. Verify the backend bind mount (`./backend:/app`) does not have the same issue (Python does not use `node_modules` so it is unaffected).
 
 ---
 
-## ✅ Review Conclusion
+## 📎 Origin File
 
-This is a **build reproducibility defect** introduced during T-007. The `react-router-dom` package is correctly used in the source code but is not available inside the Docker container at runtime. The fix is confined to the `Dockerfile` and/or `docker-compose.yml` configuration — no application logic changes are required.
-
-**Action Required:** Route to ADSP-Builder for a targeted fix to the frontend Docker build configuration.
-
-*Reviewer Agent Run: 2026-03-17T02:08:00Z*
+`.adsp/reviews/R-001/origin/error.txt`
