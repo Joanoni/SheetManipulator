@@ -157,6 +157,10 @@
 | T-006 | Export Engine (xlsx generation) | ✅ Done | `.adsp/tasks/T-006/report.md` |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done | `.adsp/tasks/T-007/report.md` |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done | `.adsp/tasks/T-008/report.md` |
+| T-009 | Static File Serving for Error Reports | ⏳ Pending | `.adsp/tasks/T-009/task.md` |
+| T-010 | Schema Column Display Name Edit UI | ⏳ Pending | `.adsp/tasks/T-010/task.md` |
+| T-011 | Upload History Page | ⏳ Pending | `.adsp/tasks/T-011/task.md` |
+| T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending | `.adsp/tasks/T-012/task.md` |
 
 </task_grid>
 
@@ -344,4 +348,44 @@
 *Last Builder Agent Run: 2026-03-16T23:14:00Z*
 
 </builder_annotation>
+
+---
+
+## Architect Annotations
+<architect_annotation>
+
+### Run: 2026-03-17T00:29:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed Visionary last run (2026-03-16T21:32:03Z) is before previous Architect run (2026-03-16T22:46:00Z); no blueprint changes detected.
+- Read `.adsp/specs/spec.md` — confirmed spec is current; all 8 original tasks are ✅ Done.
+- Inspected `src/` for production-readiness gaps:
+  - `src/backend/app/main.py` — no `StaticFiles` mount; error report download is broken.
+  - `src/frontend/src/components/UploadWizard/UploadWizard.tsx` — `error_report_path` href uses raw filesystem path, not a served URL.
+  - `src/frontend/src/pages/ManagePage.tsx` — no UI surface for `PUT /api/schemas/{table_name}/columns/{column_id}`; column rename is inaccessible.
+  - `src/backend/app/routers/upload.py` — no `GET /api/uploads` list endpoint; no upload history page exists.
+  - `README.md` — lacks `docker compose up` quickstart, environment variable reference, and development workflow.
+  - `AuditPage.tsx` and `models/dynamic_table.py` from spec structure were never created — assessed as non-critical (audit is accessible via `AuditDrawer`; DDL is handled by `dynamic_ddl.py`).
+- Created `.adsp/tasks/T-009/task.md` — Static File Serving for Error Reports (Backend, Low complexity).
+- Created `.adsp/tasks/T-010/task.md` — Schema Column Display Name Edit UI (Frontend, Medium complexity).
+- Created `.adsp/tasks/T-011/task.md` — Upload History Page (Frontend + Backend, Low complexity).
+- Created `.adsp/tasks/T-012/task.md` — README Quickstart & Docker Compose Run Guide (Documentation, Low complexity).
+- Updated task grid in `.adsp/status_log.md` with T-009–T-012.
+
+**Next 4 Tasks Queued for Builder:**
+| Task | Title | Complexity |
+| :--- | :--- | :--- |
+| T-009 | Static File Serving for Error Reports | Low |
+| T-010 | Schema Column Display Name Edit UI | Medium |
+| T-011 | Upload History Page | Low |
+| T-012 | README Quickstart & Docker Compose Run Guide | Low |
+
+**Architectural Notes:**
+> T-009 is a prerequisite for T-011 (error report links in history page depend on the `/files/` static mount). T-010 introduces `src/frontend/src/components/SchemaPanel/SchemaPanel.tsx` (new component) and extends `src/frontend/src/api/schema.ts`. T-011 adds `GET /api/uploads` to the existing `upload.py` router — the new route must be declared before `GET /api/uploads/{upload_id}/worksheets` to avoid FastAPI path-matching conflicts. T-012 is documentation-only and has no code dependencies.
+
+**Status:** ✅ Tasks T-009–T-012 created. Ready for ADSP-Builder.
+
+*Last Architect Agent Run: 2026-03-17T00:29:00Z*
+
+</architect_annotation>
 
