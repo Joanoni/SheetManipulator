@@ -12,11 +12,12 @@ services:
       - DATABASE_URL=sqlite+aiosqlite:////data/database.sqlite
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://localhost:8000
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_URL=http://localhost:8000
     depends_on:
       - backend
 

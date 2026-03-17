@@ -18,6 +18,12 @@ cd SheetManipulator
 docker compose -f src/docker-compose.yml up --build
 ```
 
+> **Re-running after an update?** Run `git pull` first to ensure your local files are current before rebuilding:
+> ```bash
+> git pull
+> docker compose -f src/docker-compose.yml up --build
+> ```
+
 The first build downloads base images and installs dependencies — subsequent starts are fast.
 
 ### Service URLs
@@ -188,6 +194,7 @@ src/
 | T-012 | README Quickstart & Docker Compose Run Guide | ✅ Done |
 | R-001 | Fix: Docker Volume Shadowing — Frontend `node_modules` | ✅ Done |
 | R-002 | Fix: Vite Dev Cache Staleness — `ColumnDefinition` Not Found in Docker | ✅ Done |
+| R-003 | Fix: Stale Local Working Tree — `git pull` step + Production Build Dockerfile | ✅ Done |
 
 ---
 

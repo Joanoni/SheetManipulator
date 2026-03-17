@@ -633,3 +633,29 @@
 
 </reviewer_annotation>
 
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T03:23:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified R-003 as the next actionable item (all tasks T-001–T-012 ✅ Done; R-001 and R-002 resolved; Reviewer routed R-003 to Builder).
+- Read `.adsp/reviews/R-003/review.md` — root cause: user's local `src/frontend/src/api/schema.ts` was a pre-T-008 version (no `ColumnDefinition` export); user had not run `git pull` since cloning; `docker compose up --build` baked the stale local file into the image via `COPY . .`; Vite served it to the browser causing `SyntaxError`.
+- Applied **Fix A**: Updated `README.md` Quickstart section — added `git pull` callout block immediately after the `docker compose up --build` command, instructing users to pull before rebuilding.
+- Applied **Fix B**: Rewrote `src/frontend/Dockerfile` as a multi-stage production build — Stage 1 (`builder`): `npm ci` + `COPY . .` + `ARG VITE_API_URL` baked via `ENV` + `npm run build`; Stage 2: `serve` static file server serving `dist/` on port 5173. Eliminates Vite dev server, dev cache, and the entire class of cache-staleness errors.
+- Updated `src/docker-compose.yml` — changed `frontend` service from `environment: VITE_API_URL` (runtime, ignored by compiled bundle) to `build.args: VITE_API_URL` (build-time, baked into bundle by Vite). Removed `environment:` block from frontend service.
+- Created `.adsp/reviews/R-003/report.md` — full implementation report with before/after details, design decisions, error class elimination table, and 12-step manual validation checklist.
+- Updated `README.md` — added R-003 row to Development Status table.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Fix Summary:**
+> **Fix A** (`README.md`): Added `git pull` callout to Quickstart — directly addresses the user's workflow gap. **Fix B** (`src/frontend/Dockerfile` + `src/docker-compose.yml`): Multi-stage production build eliminates the Vite dev server and its entire cache layer; `VITE_API_URL` is now correctly passed as a Docker build arg and baked into the bundle at build time. This resolves R-003 and permanently eliminates the class of errors that caused R-002 and R-003.
+
+**Status:** ✅ R-003 resolved. Production build Dockerfile deployed; README Quickstart updated with `git pull` step.
+
+*Last Builder Agent Run: 2026-03-17T03:23:00Z*
+
+</builder_annotation>
+
