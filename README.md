@@ -48,7 +48,7 @@ docker compose up --build
 src/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py              # FastAPI app factory, lifespan, router registration
+│   │   ├── main.py              # FastAPI app factory, lifespan, router registration, StaticFiles mount (T-009)
 │   │   ├── database.py          # SQLAlchemy async engine + init_db()
 │   │   ├── models/
 │   │   │   ├── upload_registry.py   # ORM: upload_registry table
@@ -113,6 +113,10 @@ src/
 | T-006 | Export Engine (xlsx generation) | ✅ Done |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done |
+| T-009 | Static File Serving for Error Reports | ✅ Done |
+| T-010 | Schema Column Display Name Edit UI | ⏳ Pending |
+| T-011 | Upload History Page | ⏳ Pending |
+| T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending |
 
 ---
 

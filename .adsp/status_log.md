@@ -157,7 +157,7 @@
 | T-006 | Export Engine (xlsx generation) | ✅ Done | `.adsp/tasks/T-006/report.md` |
 | T-007 | Frontend: Upload Wizard + Schema Mapping UI | ✅ Done | `.adsp/tasks/T-007/report.md` |
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done | `.adsp/tasks/T-008/report.md` |
-| T-009 | Static File Serving for Error Reports | ⏳ Pending | `.adsp/tasks/T-009/task.md` |
+| T-009 | Static File Serving for Error Reports | ✅ Done | `.adsp/tasks/T-009/report.md` |
 | T-010 | Schema Column Display Name Edit UI | ⏳ Pending | `.adsp/tasks/T-010/task.md` |
 | T-011 | Upload History Page | ⏳ Pending | `.adsp/tasks/T-011/task.md` |
 | T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending | `.adsp/tasks/T-012/task.md` |
@@ -388,4 +388,31 @@
 *Last Architect Agent Run: 2026-03-17T00:29:00Z*
 
 </architect_annotation>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T01:31:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-009 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-009/task.md`.
+- Implemented T-009: Static File Serving for Error Reports.
+  - Modified `src/backend/app/main.py` — added `import os`, `from fastapi.staticfiles import StaticFiles`, `_UPLOADS_DIR = "/data/uploads"` constant, `os.makedirs(_UPLOADS_DIR, exist_ok=True)` at module level, and `app.mount("/files/uploads", StaticFiles(directory=_UPLOADS_DIR, html=False), name="uploads")` after all API routers.
+  - Modified `src/backend/app/services/export.py` — changed `generate_error_report()` return value from absolute filesystem path (`/data/uploads/{id}/error_report_{id}.xlsx`) to relative URL path (`uploads/{id}/error_report_{id}.xlsx`); `upload_registry.error_report_path` now stores a URL-ready value.
+  - Modified `src/frontend/src/components/UploadWizard/UploadWizard.tsx` — fixed error report download `href` from `${VITE_API_URL}/${state.errorReportPath}` to `${VITE_API_URL}/files/${state.errorReportPath}`.
+- Created `.adsp/tasks/T-009/report.md` with full implementation report and 12-step manual validation checklist.
+- Updated `README.md` — annotated `main.py` with T-009 note; added T-009–T-012 to Development Status table.
+- Updated `.adsp/status_log.md` (this entry).
+
+**URL Construction Flow:**
+> `upload_registry.error_report_path` = `"uploads/{id}/error_report_{id}.xlsx"` → frontend builds `${VITE_API_URL}/files/uploads/{id}/error_report_{id}.xlsx` → FastAPI `StaticFiles` serves from `/data/uploads/{id}/error_report_{id}.xlsx`.
+
+**Status:** ✅ T-009 complete. Ready for T-010.
+
+*Last Builder Agent Run: 2026-03-17T01:31:00Z*
+
+</builder_annotation>
 

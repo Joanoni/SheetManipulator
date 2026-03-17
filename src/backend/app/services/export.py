@@ -24,7 +24,9 @@ def generate_error_report(errors: list[ValidationError], upload_id: str) -> str:
         upload_id: UUID string used to build the output path.
 
     Returns:
-        Absolute path to the saved error report file.
+        Relative URL path to the saved error report file, suitable for use
+        with the /files/uploads static mount.
+        Format: ``uploads/{upload_id}/error_report_{upload_id}.xlsx``
     """
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -36,9 +38,10 @@ def generate_error_report(errors: list[ValidationError], upload_id: str) -> str:
     for e in errors:
         ws.append([e.original_line_index, e.column, e.original_value, e.error_reason])
 
-    path = f"/data/uploads/{upload_id}/error_report_{upload_id}.xlsx"
-    wb.save(path)
-    return path
+    abs_path = f"/data/uploads/{upload_id}/error_report_{upload_id}.xlsx"
+    wb.save(abs_path)
+    # Return a relative URL path so upload_registry.error_report_path is URL-ready
+    return f"uploads/{upload_id}/error_report_{upload_id}.xlsx"
 
 
 async def export_table_to_xlsx(

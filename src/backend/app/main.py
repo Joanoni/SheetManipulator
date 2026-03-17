@@ -1,10 +1,14 @@
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.database import init_db
 from app.routers import upload, schema, data, export
+
+_UPLOADS_DIR = "/data/uploads"
 
 
 @asynccontextmanager
@@ -35,3 +39,8 @@ app.include_router(export.router, prefix="/api", tags=["export"])
 @app.get("/health", tags=["health"])
 async def health():
     return {"status": "ok"}
+
+
+# Static file serving for error reports — mounted AFTER all API routers
+os.makedirs(_UPLOADS_DIR, exist_ok=True)
+app.mount("/files/uploads", StaticFiles(directory=_UPLOADS_DIR, html=False), name="uploads")

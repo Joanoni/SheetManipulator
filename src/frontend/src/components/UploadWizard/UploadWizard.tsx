@@ -450,7 +450,7 @@ export default function UploadWizard() {
                   </p>
                   {state.errorReportPath && (
                     <a
-                      href={`${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/${state.errorReportPath}`}
+                      href={`${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/files/${state.errorReportPath}`}
                       download
                       className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
                     >
