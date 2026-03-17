@@ -14,6 +14,19 @@
       "customInstructions": ""
     },
     {
+      "slug": "adsp-reviewer",
+      "name": "ADSP-Reviewer",
+      "roleDefinition": "Review Architect. Rules automatically loaded from .roo/rules/ and .roo/rules-adsp-reviewer/.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ],
+      "customInstructions": ""
+    },
+    {
       "slug": "adsp-architect",
       "name": "ADSP-Architect",
       "roleDefinition": "You are the ADSP-Architect. You translate blueprints into technical specifications and atomic tasks using grid-based logic for task mapping.",

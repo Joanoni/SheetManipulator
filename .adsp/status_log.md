@@ -499,3 +499,28 @@
 
 </builder_annotation>
 
+---
+
+## Reviewer Annotations
+<reviewer_annotation>
+
+### Run: 2026-03-17T02:08:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed all 12 tasks (T-001–T-012) are ✅ Done; last Builder run at `2026-03-17T01:40:00Z`.
+- Read `.adsp/inbox/review_features/error.txt` — user-reported frontend runtime error after Docker Quickstart.
+- Determined next review ID: **R-001** (first review; `.adsp/reviews/` was empty).
+- Created `.adsp/reviews/R-001/review.md` — full root-cause analysis of the `react-router-dom` import resolution failure inside the Docker container.
+- Copied origin file to `.adsp/reviews/R-001/origin/error.txt`.
+- Deleted `.adsp/inbox/review_features/error.txt` (move complete).
+
+**Review Summary:**
+> **R-001 — Frontend Import Error: `react-router-dom` Not Found**
+> User ran `docker compose up --build` per README Quickstart. Build succeeded but the frontend Vite dev server threw `[plugin:vite:import-analysis] Failed to resolve import "react-router-dom"`. Root cause: `react-router-dom` was installed on the host during T-007 but the Docker build context does not include the host `node_modules/`, and the container's `npm install` step may not be correctly resolving the dependency. Severity: 🔴 Critical — frontend is completely non-functional via Docker. No application logic defect; fix is confined to `Dockerfile` and/or `docker-compose.yml`. Action required: route to ADSP-Builder.
+
+**Status:** ✅ R-001 review created. Ready for ADSP-Builder to action the fix.
+
+*Last Reviewer Agent Run: 2026-03-17T02:08:00Z*
+
+</reviewer_annotation>
+

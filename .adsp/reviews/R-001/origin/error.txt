@@ -1,0 +1,5 @@
+I ran the Quickstart (Docker) commands from the README.md.
+The build was ok.
+When I tried to open the frontend, the following error shown:
+```
+[plugin:vite:import-analysis] Failed to resolve import "react-router-dom" from "src/App.tsx". Does the file exist?
