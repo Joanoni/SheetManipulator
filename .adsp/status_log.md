@@ -160,7 +160,7 @@
 | T-009 | Static File Serving for Error Reports | ✅ Done | `.adsp/tasks/T-009/report.md` |
 | T-010 | Schema Column Display Name Edit UI | ✅ Done | `.adsp/tasks/T-010/report.md` |
 | T-011 | Upload History Page | ✅ Done | `.adsp/tasks/T-011/report.md` |
-| T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending | `.adsp/tasks/T-012/task.md` |
+| T-012 | README Quickstart & Docker Compose Run Guide | ✅ Done | `.adsp/tasks/T-012/report.md` |
 
 </task_grid>
 
@@ -464,6 +464,38 @@
 **Status:** ✅ T-010 complete. Ready for T-011.
 
 *Last Builder Agent Run: 2026-03-17T01:35:00Z*
+
+</builder_annotation>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T01:40:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-012 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-012/task.md`.
+- Read `.adsp/blueprints/blueprint.md` — extracted OQ-01 through OQ-04 for Known Limitations section.
+- Implemented T-012: README Quickstart & Docker Compose Run Guide.
+  - Rewrote `README.md` in full with the following sections:
+    - **Quickstart (Docker):** Prerequisites, exact `git clone` + `docker compose -f src/docker-compose.yml up --build` commands.
+    - **Service URLs:** Frontend (5173), Backend API (8000), Swagger UI (/docs), Health check (/health).
+    - **Development (Local):** Backend `uvicorn --reload` + Frontend `npm run dev` with env var prefixes.
+    - **Environment Variables:** `DATABASE_URL` + `VITE_API_URL` table with defaults and descriptions.
+    - **How It Works:** ASCII pipeline diagram from blueprint.
+    - **Project Structure:** Updated to include `SchemaPanel/`, `HistoryPage.tsx`, `/files/uploads` static mount annotation, all T-009–T-011 additions.
+    - **API Reference:** Full 16-endpoint table (bonus section for developer experience).
+    - **Development Status:** All 12 tasks T-001–T-012 listed with ✅ Done status.
+    - **Known Limitations:** OQ-01 through OQ-04 from `blueprint.md` with impact descriptions.
+    - **Stack:** Technology table.
+- Created `.adsp/tasks/T-012/report.md` with full implementation report and 12-step manual validation checklist.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-012 complete. All 12 tasks done — project fully implemented and documented.
+
+*Last Builder Agent Run: 2026-03-17T01:40:00Z*
 
 </builder_annotation>
 
