@@ -55,7 +55,7 @@ src/
 │   │   │   ├── schema_definition.py # ORM: schema_definitions table
 │   │   │   └── audit_log.py         # ORM: audit_log table
 │   │   ├── routers/
-│   │   │   ├── upload.py        # POST /upload, GET /uploads/... (T-003)
+│   │   │   ├── upload.py        # POST /upload, GET /uploads, GET /uploads/... (T-003, T-011)
 │   │   │   ├── schema.py        # CRUD /schemas (T-004)
 │   │   │   ├── data.py          # CRUD /tables/{name}/rows + audit (T-005)
 │   │   │   └── export.py        # GET /tables/{name}/export → StreamingResponse .xlsx (T-006)
@@ -77,7 +77,7 @@ src/
 │   │   ├── App.tsx              # BrowserRouter shell + NavBar (T-007)
 │   │   ├── api/
 │   │   │   ├── client.ts        # Axios base client (T-007)
-│   │   │   ├── ingestion.ts     # Upload/process/status API calls (T-007)
+│   │   │   ├── ingestion.ts     # Upload/process/status/listUploads API calls (T-007, T-011)
 │   │   │   ├── schema.ts        # Schema CRUD API calls + TypeScript interfaces (T-007, T-008, T-010)
 │   │   │   └── data.ts          # Row CRUD + audit + export API calls (T-008)
 │   │   ├── components/
@@ -94,7 +94,8 @@ src/
 │   │   │       └── SchemaPanel.tsx    # Inline column display name editor (T-010)
 │   │   └── pages/
 │   │       ├── IngestionPage.tsx # Upload wizard page (T-007)
-│   │       └── ManagePage.tsx    # Table selector + SchemaPanel + DataTable (T-008, T-010)
+│   │       ├── ManagePage.tsx    # Table selector + SchemaPanel + DataTable (T-008, T-010)
+│   │       └── HistoryPage.tsx   # Upload history table with auto-refresh (T-011)
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   └── package.json
@@ -117,7 +118,7 @@ src/
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done |
 | T-009 | Static File Serving for Error Reports | ✅ Done |
 | T-010 | Schema Column Display Name Edit UI | ✅ Done |
-| T-011 | Upload History Page | ⏳ Pending |
+| T-011 | Upload History Page | ✅ Done |
 | T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending |
 
 ---

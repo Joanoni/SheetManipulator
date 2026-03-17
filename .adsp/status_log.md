@@ -159,7 +159,7 @@
 | T-008 | Frontend: Dynamic DataTable CRUD + Audit Drawer | ✅ Done | `.adsp/tasks/T-008/report.md` |
 | T-009 | Static File Serving for Error Reports | ✅ Done | `.adsp/tasks/T-009/report.md` |
 | T-010 | Schema Column Display Name Edit UI | ✅ Done | `.adsp/tasks/T-010/report.md` |
-| T-011 | Upload History Page | ⏳ Pending | `.adsp/tasks/T-011/task.md` |
+| T-011 | Upload History Page | ✅ Done | `.adsp/tasks/T-011/report.md` |
 | T-012 | README Quickstart & Docker Compose Run Guide | ⏳ Pending | `.adsp/tasks/T-012/task.md` |
 
 </task_grid>
@@ -413,6 +413,32 @@
 **Status:** ✅ T-009 complete. Ready for T-010.
 
 *Last Builder Agent Run: 2026-03-17T01:31:00Z*
+
+</builder_annotation>
+
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T01:38:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified T-011 as next pending task.
+- Read `.adsp/specs/spec.md` and `.adsp/tasks/T-011/task.md`.
+- Implemented T-011: Upload History Page.
+  - Modified `src/backend/app/routers/upload.py` — added `GET /api/uploads` list endpoint returning `list[UploadRegistryRead]` ordered by `timestamp DESC`; inserted **before** `GET /api/uploads/{upload_id}/worksheets` to avoid FastAPI path-matching conflict.
+  - Modified `src/frontend/src/api/ingestion.ts` — added `UploadStatus` interface (upload_id, original_filename, timestamp, status union, error_report_path); added `listUploads()` calling `GET /api/uploads`; tightened `getUploadStatus` return type from `{ status: string; error_report_path: string | null }` to `UploadStatus`.
+  - Created `src/frontend/src/pages/HistoryPage.tsx` — `useQuery` with `refetchInterval` callback (5 s while any row is `pending`/`validating`, `false` otherwise); inline `StatusBadge` component with color-coded classes (gray/yellow/red/green); truncated Upload ID with full ID in `title` tooltip; "⬇ Error Report" download link using `${VITE_API_URL}/files/${error_report_path}`; empty state "No uploads yet."; loading and error states.
+  - Modified `src/frontend/src/App.tsx` — extracted `navClass` helper; added `HistoryPage` import; added `<NavLink to="/history">History</NavLink>` in nav; added `<Route path="/history" element={<HistoryPage />} />`.
+  - Ran `npx tsc --noEmit` — exit code 0, zero type errors.
+- Created `.adsp/tasks/T-011/report.md` with full implementation report and 15-step manual validation checklist.
+- Updated `README.md` — added `HistoryPage.tsx` to project structure; updated `upload.py` and `ingestion.ts` annotations; marked T-011 as Done.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Status:** ✅ T-011 complete. Ready for T-012.
+
+*Last Builder Agent Run: 2026-03-17T01:38:00Z*
 
 </builder_annotation>
 

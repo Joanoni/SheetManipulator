@@ -3,6 +3,7 @@ Upload router — Ingestion Pipeline endpoints.
 
 Routes:
   POST   /api/upload                          → upload_file()
+  GET    /api/uploads                         → list_uploads()
   GET    /api/uploads/{upload_id}/worksheets  → get_worksheets()
   POST   /api/uploads/{upload_id}/process     → process_upload()
   GET    /api/uploads/{upload_id}/status      → get_status()
@@ -78,6 +79,21 @@ async def upload_file(
     await db.commit()
 
     return {"upload_id": upload_id, "status": "pending"}
+
+
+# ── GET /api/uploads ─────────────────────────────────────────────────────────
+
+@router.get("/uploads", response_model=list[UploadRegistryRead])
+async def list_uploads(
+    db: AsyncSession = Depends(get_db),
+) -> list[UploadRegistryRead]:
+    """
+    Return all upload_registry records ordered by timestamp DESC.
+    """
+    result = await db.execute(
+        select(UploadRegistry).order_by(UploadRegistry.timestamp.desc())
+    )
+    return result.scalars().all()
 
 
 # ── GET /api/uploads/{upload_id}/worksheets ───────────────────────────────────
