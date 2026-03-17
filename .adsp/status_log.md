@@ -577,3 +577,28 @@
 
 </reviewer_annotation>
 
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T03:15:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified R-002 as the next actionable item (all tasks T-001–T-012 ✅ Done; Reviewer routed R-002 to Builder).
+- Read `.adsp/reviews/R-002/review.md` — root cause: `src/frontend/Dockerfile` executes `COPY . .` after `RUN npm ci`, baking the developer's local `node_modules/.vite/` pre-bundle cache into the Docker image layer; if that cache predated T-008's addition of `ColumnDefinition` to `schema.ts`, Vite served the stale module to the browser causing `SyntaxError: The requested module '/src/api/schema.ts' does not provide an export named 'ColumnDefinition'`.
+- Applied **Fix A**: Created `src/frontend/.dockerignore` — excludes `node_modules/`, `.vite/`, and `dist/` from the Docker build context; stale cache can no longer be baked into the image.
+- Applied **Fix B**: Updated `src/frontend/Dockerfile` CMD — added `--force` flag to `npm run dev` invocation; Vite now regenerates the pre-bundle cache on every container startup as a safety net.
+- Created `.adsp/reviews/R-002/report.md` — full implementation report with before/after details and 8-step manual validation checklist.
+- Updated `README.md` — added R-002 row to Development Status table.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Fix Summary:**
+> **Fix A** (`src/frontend/.dockerignore`): Prevents `node_modules/.vite/` from entering the Docker build context — eliminates the root cause. **Fix B** (`--force` in Dockerfile CMD): Forces Vite to regenerate the pre-bundle cache on every startup — safety net for any future cache contamination. Source code (`schema.ts`, `AddRowModal.tsx`) was confirmed correct and required no changes.
+
+**Status:** ✅ R-002 resolved. Docker Quickstart `ColumnDefinition` error is fixed.
+
+*Last Builder Agent Run: 2026-03-17T03:15:00Z*
+
+</builder_annotation>
+
