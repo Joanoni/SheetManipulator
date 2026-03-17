@@ -549,3 +549,31 @@
 
 </builder_annotation>
 
+---
+
+## Reviewer Annotations
+<reviewer_annotation>
+
+### Run: 2026-03-17T03:13:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed all 12 tasks (T-001–T-012) ✅ Done; R-001 resolved by Builder at `2026-03-17T02:28:00Z`.
+- Read `.adsp/inbox/review_features/error.txt` — user-reported frontend runtime error after Docker Quickstart.
+- Inspected `src/frontend/src/api/schema.ts` — confirmed `ColumnDefinition` **is correctly exported** at line 35; source code is not the root cause.
+- Inspected `src/frontend/src/components/DataTable/AddRowModal.tsx`, `DataTable.tsx`, `SchemaPanel.tsx` — all imports are syntactically correct.
+- Inspected `src/frontend/Dockerfile`, `src/docker-compose.yml`, `src/frontend/package.json`, `src/frontend/vite.config.ts` — identified root cause.
+- Determined next review ID: **R-002**.
+- Created `.adsp/reviews/R-002/review.md` — full root-cause analysis with fix recommendations (Fix A: `.dockerignore`, Fix B: `--force` flag, Fix C: production build).
+- Created `.adsp/reviews/R-002/origin/error.txt` — archived origin file.
+- Deleted `.adsp/inbox/review_features/error.txt` (move complete).
+
+**Review Summary:**
+> **R-002 — Frontend Runtime Error: `ColumnDefinition` Not Found (Vite Dev Cache Staleness in Docker)**
+> User ran `docker compose up --build` per README Quickstart. Build succeeded but Chrome threw `Uncaught SyntaxError: The requested module '/src/api/schema.ts' does not provide an export named 'ColumnDefinition'`. Root cause: `src/frontend/Dockerfile` executes `COPY . .` which copies the developer's local `node_modules/.vite/` pre-bundle cache into the image. If that cache predates T-008's addition of `ColumnDefinition` to `schema.ts`, Vite serves the stale cached module to the browser. Severity: 🔴 Critical — frontend is completely non-functional via Docker Quickstart. Recommended fix: add `src/frontend/.dockerignore` excluding `node_modules/` and `.vite/` (Fix A), and add `--force` to the Vite CMD (Fix B). Action required: route to ADSP-Builder.
+
+**Status:** ✅ R-002 review created. Ready for ADSP-Builder to action the fix.
+
+*Last Reviewer Agent Run: 2026-03-17T03:13:00Z*
+
+</reviewer_annotation>
+

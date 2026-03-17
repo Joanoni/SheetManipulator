@@ -1,0 +1,5 @@
+I ran the Quickstart (Docker) commands from the README.md.
+The build was ok.
+When I tried to open the frontend, the following error in chrome console:
+```
+Uncaught SyntaxError: The requested module '/src/api/schema.ts' does not provide an export named 'ColumnDefinition' (at AddRowModal.tsx:2:10)
