@@ -602,3 +602,34 @@
 
 </builder_annotation>
 
+---
+
+## Reviewer Annotations
+<reviewer_annotation>
+
+### Run: 2026-03-17T03:19:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed all 12 tasks (T-001–T-012) ✅ Done; R-001 resolved at `2026-03-17T02:28:00Z`; R-002 resolved at `2026-03-17T03:15:00Z`.
+- Read `.adsp/inbox/review_features/error.txt` — user-reported identical frontend runtime error for the second time.
+- Inspected `.adsp/reviews/R-002/review.md` and `.adsp/reviews/R-002/report.md` — confirmed R-002 fixes (`.dockerignore` + `--force`) were correctly applied.
+- Inspected `src/frontend/Dockerfile` — confirmed `--force` flag present in CMD.
+- Inspected `src/frontend/.dockerignore` — confirmed `node_modules/`, `.vite/`, `dist/` excluded.
+- Inspected `src/frontend/src/api/schema.ts` — confirmed `ColumnDefinition` is correctly exported at line 35.
+- Inspected `src/frontend/src/components/DataTable/AddRowModal.tsx` — confirmed import is syntactically correct.
+- Inspected `src/frontend/vite.config.ts`, `src/docker-compose.yml`, `src/frontend/package.json` — completed full environment analysis.
+- Determined next review ID: **R-003**.
+- Created `.adsp/reviews/R-003/review.md` — full root-cause analysis with fix recommendations.
+- Created `.adsp/reviews/R-003/origin/error.txt` — archived origin file.
+- Deleted `.adsp/inbox/review_features/error.txt` (move complete).
+
+**Review Summary:**
+> **R-003 — Frontend Runtime Error: `ColumnDefinition` Not Found (Stale Local Working Tree — User Has Not Pulled Latest Commits)**
+> User ran `docker compose up --build` again after R-002 was resolved and received the identical `SyntaxError`. Root cause: R-002 fixed the Vite pre-bundle cache staleness scenario, but did not address the scenario where the **source file itself** (`schema.ts`) is stale in the user's local working tree. The user cloned the repository before T-008 was committed and never ran `git pull`. `docker compose up --build` copies the local working tree via `COPY . .` — baking the pre-T-008 `schema.ts` (without `ColumnDefinition`) into the image. Severity: 🟡 Medium — self-resolving after `git pull`; no code defect in the repository. Fix: update README Quickstart to include a `git pull` step before `docker compose up --build`. Long-term fix: switch to production build in Dockerfile (Fix B from R-002 / Fix C from R-002 review). Action required: route to ADSP-Builder.
+
+**Status:** ✅ R-003 review created. Ready for ADSP-Builder to action the fix.
+
+*Last Reviewer Agent Run: 2026-03-17T03:19:00Z*
+
+</reviewer_annotation>
+
