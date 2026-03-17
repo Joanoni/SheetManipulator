@@ -186,6 +186,7 @@ src/
 | T-010 | Schema Column Display Name Edit UI | ✅ Done |
 | T-011 | Upload History Page | ✅ Done |
 | T-012 | README Quickstart & Docker Compose Run Guide | ✅ Done |
+| R-001 | Fix: Docker Volume Shadowing — Frontend `node_modules` | ✅ Done |
 
 ---
 

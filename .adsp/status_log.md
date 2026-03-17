@@ -525,3 +525,27 @@
 
 </reviewer_annotation>
 
+---
+
+## Builder Annotations
+<builder_annotation>
+
+### Run: 2026-03-17T02:28:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — identified R-001 as the next actionable item (all tasks T-001–T-012 are ✅ Done; Reviewer routed R-001 to Builder).
+- Read `.adsp/reviews/R-001/review.md` — root cause: `docker-compose.yml` frontend service bind mount `./frontend:/app` shadows the container's `node_modules/` installed by `npm ci` during image build; anonymous volume `/app/node_modules` is empty on fresh `docker compose up --build`, causing Vite to fail resolving `react-router-dom`.
+- Applied **Option A** (Reviewer recommendation): removed `volumes:` block from `frontend` service in `src/docker-compose.yml` — deleted `./frontend:/app` bind mount and `/app/node_modules` anonymous volume.
+- Created `.adsp/reviews/R-001/report.md` — full implementation report with before/after YAML, root cause summary, impact analysis, and 7-step manual validation checklist.
+- Updated `README.md` — added R-001 row to Development Status table.
+- Updated `.adsp/status_log.md` (this entry).
+
+**Fix Summary:**
+> Removed the `./frontend:/app` bind mount and `/app/node_modules` anonymous volume from the `frontend` service in `src/docker-compose.yml`. The container now uses the image-built `node_modules/` installed by `npm ci` during `docker build`. Hot-reload is not available in Docker mode (local dev workflow documented in README is unaffected). Backend bind mount `./backend:/app` is retained — Python does not use `node_modules`.
+
+**Status:** ✅ R-001 resolved. Docker Quickstart is functional.
+
+*Last Builder Agent Run: 2026-03-17T02:28:00Z*
+
+</builder_annotation>
+

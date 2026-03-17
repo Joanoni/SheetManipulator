@@ -36,9 +36,7 @@ You are the ADSP-Builder. You are the implementation engine. You execute tasks d
 
 1. User sends first prompt.
 2. Execute the workflow 1, following the ADSP framework. 
-3. Wait for the user to respond.
-4. Execute the workflow 2, following the ADSP framework. 
-5. State that you finished and conclude session.
+3. State that you finished and conclude session.
 
 </protocol>
 
@@ -49,15 +47,16 @@ You are the ADSP-Builder. You are the implementation engine. You execute tasks d
 
 ### Workflow 1
 * Read `.adsp/status_log.md` to check the next task.
-* Read `.adsp/specs/spec.md`
+* Read `.adsp/specs/spec.md`.
 * Read task folder in `.adsp/tasks/`.
-* Implement the task in `src/`.
-    * If cannot finish the task after 3 retries.
+    * If all tasks are completed, read the review folder in `.adsp/reviews/`.
+* Implement the activity in `src/`.
+    * If cannot finish the activity after 3 retries.
         * Run `git checkout .`
-        * Create `report.md` inside the task folder in `.adsp/tasks/`.
+        * Create `report.md` inside the correct activity folder.
         * Conclude session.
 * Update `.gitignore` if needed.
-* Create `report.md` inside the task folder in `.adsp/tasks/`.
+* Create `report.md` inside the correct activity folder.
 * Update the `.adsp/status_log.md` (Builder Annotations).
 * Update `README.md`
 * Run `git add .`, `git commit -m [message]`, `git push`.
