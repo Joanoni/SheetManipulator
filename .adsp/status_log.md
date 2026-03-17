@@ -659,3 +659,35 @@
 
 </builder_annotation>
 
+---
+
+## Reviewer Annotations
+<reviewer_annotation>
+
+### Run: 2026-03-17T03:27:00Z
+
+**Actions Performed:**
+- Read `.adsp/status_log.md` — confirmed all 12 tasks (T-001–T-012) ✅ Done; R-001, R-002, R-003 resolved by Builder at `2026-03-17T03:23:00Z`.
+- Read `.adsp/inbox/review_features/error.txt` — user-reported Docker build failure: `tsc -b` exits with code 2 during `[frontend builder 6/6] RUN npm run build`.
+- Inspected [`src/frontend/tsconfig.app.json`](src/frontend/tsconfig.app.json) — confirmed `"verbatimModuleSyntax": true` at line 14.
+- Inspected all 5 affected source files:
+  - [`src/frontend/src/components/AuditDrawer/AuditDrawer.tsx`](src/frontend/src/components/AuditDrawer/AuditDrawer.tsx) line 2 — `AuditEntry` (interface) imported without `type` keyword.
+  - [`src/frontend/src/components/DataTable/AddRowModal.tsx`](src/frontend/src/components/DataTable/AddRowModal.tsx) line 2 — `ColumnDefinition` (interface) imported without `type` keyword.
+  - [`src/frontend/src/components/DataTable/DataTable.tsx`](src/frontend/src/components/DataTable/DataTable.tsx) line 3 — `ColumnDefinition` (interface) imported without `type` keyword.
+  - [`src/frontend/src/components/SchemaPanel/SchemaPanel.tsx`](src/frontend/src/components/SchemaPanel/SchemaPanel.tsx) lines 4–5 — `ColumnDefinition` and `ColumnDisplayNameUpdate` (interfaces) imported without `type` keyword.
+  - [`src/frontend/src/pages/HistoryPage.tsx`](src/frontend/src/pages/HistoryPage.tsx) line 2 — `UploadStatus` (interface) imported without `type` keyword.
+- Determined next review ID: **R-004**.
+- Created `.adsp/reviews/R-004/review.md` — full root-cause analysis with fix specification for all 5 files.
+- Created `.adsp/reviews/R-004/origin/error.txt` — archived origin file.
+- Deleted `.adsp/inbox/review_features/error.txt` (move complete).
+
+**Review Summary:**
+> **R-004 — TypeScript Build Failure: `verbatimModuleSyntax` Type Import Violations**
+> User ran `docker compose up --build`. The multi-stage production build (introduced in R-003) now runs `tsc -b && vite build` inside the Docker builder stage. `tsc -b` enforces `"verbatimModuleSyntax": true` from `tsconfig.app.json` and fails with TS1484 on 6 import statements across 5 files where TypeScript `interface` symbols are imported without the `import type` keyword. The Builder's prior validation (`npx tsc --noEmit`) did not use project-build mode (`-b`) and therefore did not apply this constraint. Severity: 🔴 Critical — Docker image build fails; frontend is completely non-functional. Fix: change all 6 offending imports to `import type { ... }` syntax. Action required: route to ADSP-Builder.
+
+**Status:** ✅ R-004 review created. Ready for ADSP-Builder to action the fix.
+
+*Last Reviewer Agent Run: 2026-03-17T03:27:00Z*
+
+</reviewer_annotation>
+
